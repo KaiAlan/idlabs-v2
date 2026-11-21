@@ -1,0 +1,76 @@
+/* /office — see Office.tsx */
+
+@font-face {
+  font-family: 'Season Mix';
+  src: url('/experiment/fonts/season-mix-regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+.of {
+  background: #fff;
+  color: #1f1f1f;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+.of-pin { position: relative; height: 700vh; }
+
+.of-stage {
+  --card: 0;
+  --hint: 1;
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* The card: the full-screen canvas, scaled down and centred while --card is 0. */
+.of-card {
+  --s0: 0.5;
+  --x0: 0vw;
+  --y0: 0vh;
+  position: absolute; inset: 0;
+  transform: translate(calc(var(--x0) * (1 - var(--card))), calc(var(--y0) * (1 - var(--card)))) scale(calc(var(--s0) + (1 - var(--s0)) * var(--card)));
+  transform-origin: 50% 50%;
+  background: #e9eef3;
+  will-change: transform;
+}
+.of-canvas { display: block; width: 100%; height: 100%; }
+
+.of-loading {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: #737373;
+  background: #eef1f4;
+  transition: opacity 600ms ease;
+}
+.of-stage[data-loaded] .of-loading { opacity: 0; pointer-events: none; }
+
+.of-hint {
+  position: absolute; left: 0; right: 0; bottom: 5vh; margin: 0;
+  text-align: center; font-size: 12px; text-transform: uppercase; color: #737373;
+  opacity: var(--hint);
+}
+
+.of-captions p {
+  position: absolute; left: 4vw; bottom: 5vh; margin: 0; max-width: 34em;
+  font-size: 12px; line-height: 1.5; text-transform: uppercase; color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+}
+
+.of-next {
+  min-height: 70vh;
+  display: grid; place-content: center; gap: 12px;
+  padding: 10vh 6vw; text-align: center;
+}
+.of-next h2 {
+  margin: 0;
+  font-family: 'Season Mix', Georgia, serif; font-weight: 400;
+  font-size: clamp(30px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.05;
+}
+.of-next p { margin: 0; font-size: 12px; text-transform: uppercase; color: #737373; }
+
+@media (max-width: 760px) {
+  .of-card { --s0: 0.88; --x0: 0vw; --y0: 4vh; }
+}
