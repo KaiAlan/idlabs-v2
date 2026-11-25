@@ -1,0 +1,270 @@
+/* /exp/cd: the Creative Director page. White; a narrow text column (512, as the home page's hero copy) centred, the gallery and the
+   process video wider (1188). Two faces only: Season Mix for the headings and names, IBM Plex Mono in caps. */
+@font-face { font-family: 'Season Mix'; src: url('/experiment/fonts/season-mix-regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+.cd {
+  --cd-serif: 'Season Mix', var(--serif);
+  --cd-ink: #1a1a1a;
+  --cd-soft: #989898;
+  --cd-text: #5c5c5c;
+  --cd-fill: #f5f5f5;
+  position: relative; z-index: 10; min-height: 100vh;
+  padding: 0 20px 160px;
+  background: #fff; color: var(--cd-ink);
+  font-family: var(--mono); font-weight: 400; font-feature-settings: 'ss01', 'ss02';
+}
+
+/* the wordmark, centred at the top, the size of the home page's: 21px at 1440 wide, growing with the
+   window past that as the home page's does (its --px scale) */
+.cd .cd-mark {
+  position: absolute; top: max(20px, 1.39vw); left: 50%; translate: -50% 0; margin: 0;
+  font-size: max(21px, 1.4583vw); letter-spacing: -0.08em; color: #4a4a4a; text-decoration: none;
+  animation: none;
+}
+.cd .cd-mark .wm-space { letter-spacing: -0.1776em; }
+
+.cd-col { width: min(512px, 100%); margin: 0 auto; } /* the home page's hero copy width */
+
+/* 1. the pitch */
+.cd-intro { padding-top: 0; overflow-x: clip; } /* the hidden hover logos (CdClients) can run past the edge */
+.cd-title {
+  margin: 0;
+  font: 400 35px/1.3 var(--cd-serif); letter-spacing: 0; color: var(--cd-ink);
+}
+.cd-soft { color: var(--cd-soft); }
+/* the headline's breaks (desktop only): after "product", "you’d" and "Director" */
+@media (max-width: 640px) { .cd-br { display: none; } }
+
+.cd-copy { margin-top: 84px; }
+.cd-copy p {
+  margin: 0 0 16px;
+  font-size: 12px; line-height: 1.6; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cd-text);
+}
+.cd-copy p:last-child { margin-bottom: 0; }
+.cd-copy a {
+  color: inherit; text-decoration: none; transition: color 160ms ease;
+  /* the underline as a 1px line under the link's box: text-decoration doesn't reach into the words'
+     inline-blocks (the text animation), so it would only underline the spaces */
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 1px) / 100% 1px no-repeat;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.cd-copy a:hover { color: var(--cd-ink); }
+.cd-copy a:focus-visible { outline: 1px solid var(--cd-soft); outline-offset: 2px; }
+
+/* The first screen shows exactly two rows of the client names, the second ending 40px above its foot:
+   the names sit a fixed 64px under the copy, and the space above the headline takes up the rest. The
+   column above them (headline, copy) is --cd-block tall (measured). */
+.cd {
+  --cd-name: 48px; --cd-row: calc(var(--cd-name) * 1.5);
+  --cd-block: 360px;
+}
+.cd-hero { padding-top: max(140px, calc(100svh - var(--cd-block) - 64px - 2 * var(--cd-row) - 40px)); }
+.cd-names {
+  list-style: none; padding: 0; margin-bottom: 0;
+  margin-top: 64px;
+  display: flex; flex-wrap: wrap;
+  font: 400 var(--cd-name)/1.5 var(--cd-serif); letter-spacing: 0;
+}
+/* each name's box runs up to the next (its comma and the space are inside it), so the pointer is
+   always over one */
+.cd-names li { position: relative; white-space: nowrap; padding-right: 0.3em; }
+/* hover, as on venice.inc: the name becomes its logo (left-aligned where the name starts, the size of
+   the type) and every other name blurs and goes pale */
+.cd-name, .cd-comma { transition: color 260ms ease, filter 320ms ease, opacity 160ms ease; cursor: default; }
+.cd-name { color: #4a4a4a; }
+.cd-comma { color: #c6c6c6; }
+.cd-logo {
+  position: absolute; left: 0; top: 50%; translate: 0 -50%;
+  background: #1a1a1a; opacity: 0; pointer-events: none;
+  -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat;
+  transition: opacity 200ms ease;
+}
+.cd-names[data-active] .cd-name,
+.cd-names[data-active] .cd-comma { color: #e6e6e6; filter: blur(5px); }
+.cd-names li[data-on] .cd-name,
+.cd-names li[data-on] .cd-comma { opacity: 0; filter: none; }
+.cd-names li[data-on] .cd-logo { opacity: 1; }
+/* the hovered logo sits above its blurred neighbours if it runs past its name */
+.cd-names li[data-on] { z-index: 1; }
+
+/* 2. the gallery: columns of cards (CdGallery puts each clip in the shortest), each card its own
+   shape; the clips fill them. The entrance is shopify.design's: a card waits pushed out (--card-x),
+   down (--card-y) and enlarged (--card-s), invisible, and plays card-in home when its slot comes into
+   view, on their expo-out curve, then rests (card-static) with their springy hover. */
+.cd-work { padding-top: 200px; overflow-x: clip; }
+.cd-work .cd-gallery { margin-top: 260px; }
+/* the lead above the gallery, set like the headline: grey, the claim in ink (a link, no underline) */
+.cd-lead { margin: 0; font: 400 35px/1.3 var(--cd-serif); letter-spacing: 0; color: var(--cd-soft); }
+/* desktop: its lines as the frame breaks them (CdPage), the box as wide as the longest */
+@media (min-width: 641px) { .cd-lead { width: max-content; max-width: calc(100vw - 40px); } }
+.cd-lead a { color: var(--cd-ink); text-decoration: none; transition: color 160ms ease; }
+.cd-lead a:hover { color: #4a4a4a; }
+.cd-lead a:focus-visible { outline: 1px solid var(--cd-soft); outline-offset: 3px; }
+.cd-gallery {
+  --gap: clamp(12px, 1.7vw, 26px);
+  display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: var(--gap); align-items: start;
+  margin: 96px auto 0; width: min(1188px, 100%);
+}
+.cd-gcol { display: flex; flex-direction: column; gap: var(--gap); }
+.cd-card { aspect-ratio: var(--ar); overflow: hidden; background: var(--cd-fill); border-radius: 6px; }
+.cd-js .cd-card {
+  opacity: 0;
+  transform: translate(var(--card-x, 0), var(--card-y, 300px)) scale(var(--card-s, 1.5));
+}
+.cd-js .cd-card.card-in {
+  animation: cd-card-in var(--card-dur, 1.8s) cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0s) both;
+  will-change: transform, opacity;
+}
+@keyframes cd-card-in {
+  0% { opacity: 0; transform: translate(var(--card-x, 0), var(--card-y, 300px)) scale(var(--card-s, 1.5)); }
+  5% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+.cd-card.card-static, .cd-js .cd-card.card-static {
+  opacity: 1; transform: none;
+  transition: transform 0.65s linear(0, .008, .032 2%, .13 4.4%, .26 6.6%, .681 13%, .891 17.1%, .968, 1.028, 1.073, 1.103 25.2%, 1.114, 1.119, 1.12, 1.115 31.4%, 1.098 34.4%, 1.042 41.6%, 1.017 45.4%, .998 49.5%, .988 53.9%, .986 60.4%, 1.001 80.9% 100%);
+}
+@media (hover: hover) { .cd-card.card-static:hover { transform: scale(1.015); } }
+.cd-video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--cd-fill); }
+
+/* 3. the creative process */
+.cd-process { padding-top: 440px; }
+/* the heading in the hero's Season Mix 35px, dark; then the copy (mono caps), a long pause,
+   the line the video answers, and the video just under it (cd-7) */
+.cd-h2 { margin: 0; font: 400 35px/1.3 var(--cd-serif); letter-spacing: 0; color: var(--cd-ink); }
+.cd .cd-process-copy { margin-top: 36px; }
+.cd-step {
+  margin: 0;
+  font-size: 12px; line-height: 1.6; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cd-text);
+}
+
+.cd-steps {
+  margin: 16px 0 0; padding: 0 0 0 0; list-style: none; counter-reset: step;
+}
+.cd-steps li {
+  counter-increment: step; display: grid; grid-template-columns: 22px 1fr;
+  font-size: 12px; line-height: 1.6; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cd-text);
+}
+.cd-steps li::before { content: counter(step) '.'; }
+/* the scroll-driven video: a tall section pinning a full-screen stage; --z (0 → 1, ScrubVideo) grows the
+   frame from the column's width to the whole stage */
+.cd-scrub { position: relative; height: 560vh; margin: 40px -20px 0; }
+.cd-stage {
+  position: sticky; top: 0; height: 100vh; height: 100svh;
+  /* the frame centred: the zoom starts when it is centred on the screen */
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  container-type: size;
+}
+/* sizes in the stage's units (cqw / cqh): the column's 16:9 frame at --z 0, the whole stage at 1 */
+.cd-frame {
+  --w0: min(1188px, 100cqw - 40px);
+  --h0: calc(var(--w0) * 9 / 16);
+  width: calc(var(--w0) + (100cqw - var(--w0)) * var(--z, 0));
+  height: calc(var(--h0) + (100cqh - var(--h0)) * var(--z, 0));
+  overflow: hidden; background: var(--cd-fill) center / cover no-repeat;
+}
+.cd-canvas { display: block; width: 100%; height: 100%; }
+/* the line above the clip (ScrubVideo caption): centred over the frame, its foot 36px above the frame's
+   top while it waits (--z 0), fading out over the first part of the zoom */
+.cd-stage-cap {
+  position: absolute; left: 0; right: 0; padding: 0 20px; text-align: center;
+  bottom: calc(50cqh + min(1188px, 100cqw - 40px) * 9 / 32 + 36px);
+  opacity: calc(1 - var(--z, 0) * 4);
+}
+.cd-scrub[data-static] { height: auto; padding: 64px 0 0; }
+.cd-scrub[data-static] .cd-stage { position: static; height: auto; container-type: normal; flex-direction: column; gap: 36px; }
+.cd-scrub[data-static] .cd-stage-cap { position: static; }
+.cd-scrub[data-static] .cd-frame { width: min(1188px, 100% - 40px); height: auto; aspect-ratio: 16 / 9; }
+
+/* Text animations (CdReveal sets [data-in] as a block comes into view; the hero's on load). Only with
+   html.cd-js (set before paint, not for reduced motion). --d0 is a block's start, --st the step between
+   its words (--i). Headings: words rise out of their line. Copy: words fade up a little. Client
+   names: each rises in turn. The wordmark fades down at load. */
+.cd-w { display: inline-block; }
+.cd-js [data-reveal=""] .cd-w { overflow: clip; overflow-clip-margin: 0.1em; padding-bottom: 0.08em; margin-bottom: -0.08em; vertical-align: top; }
+.cd-js [data-reveal=""] .cd-wi { display: inline-block; transform: translateY(105%); }
+.cd-js [data-reveal=""][data-in] .cd-wi {
+  transform: none;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--d0, 0ms) + var(--i, 0) * var(--st, 38ms));
+}
+.cd-js [data-reveal="fade"] .cd-wi { display: inline-block; opacity: 0; transform: translateY(0.5em); }
+.cd-js [data-reveal="fade"][data-in] .cd-wi {
+  opacity: 1; transform: none;
+  transition: opacity 600ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--d0, 0ms) + var(--i, 0) * var(--st, 14ms));
+}
+.cd-js .cd-steps[data-reveal] li::before { opacity: 0; }
+.cd-js .cd-steps[data-reveal][data-in] li::before { opacity: 1; transition: opacity 600ms ease var(--d0, 0ms); }
+.cd-js [data-reveal="rise"] > li { opacity: 0; translate: 0 0.35em; }
+.cd-js [data-reveal="rise"][data-in] > li {
+  opacity: 1; translate: 0 0;
+  transition: opacity 800ms ease, translate 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--d0, 0ms) + var(--i, 0) * 45ms);
+}
+.cd-js .cd .cd-mark { animation: cd-mark-in 1000ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both; }
+@keyframes cd-mark-in { from { opacity: 0; translate: -50% -8px; } to { opacity: 1; translate: -50% 0; } }
+
+/* The clients as on the home page (?clients=logos): HeroVertical's card, its own styles from
+   hero-vertical.css, without its "Our Clients" title. It sits a fixed 64px under the copy, and the space
+   above the headline takes up the rest, so the first screen ends two logo rows in (only two, on any
+   screen tall enough for them): the column above
+   (--cd-block), the 64px, the card's top padding and two rows with the gap between (160px, measured),
+   40px to spare. --px: the home page's unit, which its drawn-from-parts logos (Deel, Airwallex) size by. */
+html[data-cd-clients="logos"] .cd-hero { padding-top: max(140px, calc(100svh - var(--cd-block) - 64px - 160px - 40px)); }
+/* as wide as the home page's (656: its copy's 512 and 72 either side), centred on the column */
+.cd .cd-home-clients { --px: 1px; --hvc-sp: 48px; width: min(656px, 100%); margin: 64px auto 0; }
+.cd-home-clients .hv-clients-title { display: none; }
+.cd-home-clients .hvc-grid { padding-block: var(--hvc-sp); row-gap: var(--hvc-sp); }
+.cd-js .cd-home-clients .hvc-grid { animation-delay: 1450ms; }
+.cd-js .cd-home-clients .hvc-cell { animation-delay: calc(1500ms + var(--d, 0ms)); }
+.cd-home-clients { display: none; }
+html[data-cd-clients="logos"] .cd-names { display: none; }
+html[data-cd-clients="logos"] .cd-home-clients { display: block; }
+html .cd .cd-home-clients .hv-clients[data-set] { display: block !important; }
+
+/* The margin lines, as on the home page: a fixed pair at the frame's edges (its width: --frame-max,
+   less the gutters on narrower screens), running the whole page, and small squares on them where the
+   page turns (under the header, at each section's top, at the end). Behind the content: the sections
+   sit above them. 9px squares, as the home hero's. Off with the tabs (html[data-cd-lines='off']) and on phones, as everywhere. */
+.cd-intro, .cd-work, .cd-process { position: relative; z-index: 1; }
+.cd-rails {
+  position: fixed; top: 0; bottom: 0; left: 50%; translate: -50% 0; z-index: 0; pointer-events: none;
+  width: min(var(--frame-max), 100% - 2 * var(--gutter));
+}
+.cd-rails::before, .cd-rails::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 1px; background: #e0e0e0;
+  transform-origin: top; animation: draw-y 1400ms var(--ease-out) both;
+}
+.cd-rails::before { left: 0; }
+.cd-rails::after { right: 0; }
+/* the squares: in a section, at the frame's edges worked out from the section's width (the page's
+   less its 20px sides) */
+.cd-ticks {
+  position: absolute; top: 0; left: 50%; translate: -50% 0; pointer-events: none;
+  width: min(var(--frame-max), 100% + 40px - 2 * var(--gutter));
+}
+.cd-intro > .cd-ticks { top: 63px; } /* the header's foot, as on the home page */
+.cd-ticks[data-at="bottom"] { top: auto; bottom: 0; }
+.cd-ticks > span {
+  position: absolute; top: 0; width: 9px; height: 9px; background: #e6e6e6; /* the home hero's (9px, #e6e6e6) */
+  translate: -50% -50%; animation: fade 600ms var(--ease-out) 700ms both;
+}
+.cd-ticks > span:first-child { left: 0; }
+.cd-ticks > span:last-child { left: 100%; }
+html[data-cd-lines="off"] .cd-rails, html[data-cd-lines="off"] .cd-ticks { display: none; }
+@media (max-width: 640px) { .cd-rails, .cd-ticks { display: none; } }
+
+/* narrower screens */
+@media (max-width: 900px) {
+}
+@media (max-width: 640px) {
+  .cd { --cd-name: 28px; --cd-block: 380px; }
+  .cd-hero { padding-top: max(110px, calc(100svh - var(--cd-block) - 48px - 2 * var(--cd-row) - 32px)); }
+  .cd-names, .cd .cd-home-clients { margin-top: 48px; }
+  .cd-title { font-size: 26px; }
+  .cd-copy { margin-top: 48px; }
+  .cd-work { padding-top: 120px; }
+  .cd-process { padding-top: 240px; }
+  .cd-work .cd-gallery { margin-top: 120px; }
+  .cd-lead { font-size: 26px; }
+}

@@ -218,6 +218,11 @@ function HeroClients({ names, set }: { names: string[]; set: 'all' | 'picked' })
   );
 }
 
+/* The home page's client card on its own (the client's twelve, two turning over), for /exp/cd/logos. */
+export function HomeClients() {
+  return <HeroClients names={PICKED} set="picked" />;
+}
+
 export default function HeroVertical() {
   return (
     <>
