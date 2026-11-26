@@ -30,7 +30,8 @@ const Boil = () => (
   </svg>
 );
 
-export default function CdClients({ clients }: { clients: Client[] }) {
+// delay: when the names start rising once the list plays (ms); end: what closes the list after the last name (none on /exp/cd; a full stop on /exp/cd-2)
+export default function CdClients({ clients, end, className = '', delay = 1450 }: { clients: Client[]; end?: string; className?: string; delay?: number }) {
   const [on, setOn] = useState<number | null>(null);
   const leave = useRef<number | undefined>(undefined);
 
@@ -48,7 +49,7 @@ export default function CdClients({ clients }: { clients: Client[] }) {
   return (
     <>
     <Boil />
-    <ul className="cd-col cd-names" aria-label="Clients" data-reveal="rise" style={{ '--d0': '1450ms' } as CSSProperties} data-active={on !== null ? '' : undefined} onPointerMove={pick} onPointerLeave={out}>
+    <ul className={`cd-col cd-names ${className}`} aria-label="Clients" data-reveal="rise" style={{ '--d0': `${delay}ms` } as CSSProperties} data-active={on !== null ? '' : undefined} onPointerMove={pick} onPointerLeave={out}>
       {clients.map((c, i) => {
         const h = fit(c.ratio, c.boost);
         return (
@@ -61,7 +62,7 @@ export default function CdClients({ clients }: { clients: Client[] }) {
               aria-hidden="true"
               style={{ '--src': `url('${c.src}')`, width: `${(c.ratio * h).toFixed(3)}em`, height: `${h.toFixed(3)}em` } as CSSProperties}
             ><span className="cd-logo-ink" /></span>
-            {i < clients.length - 1 && <span className="cd-comma" aria-hidden="true">,</span>}
+            {i < clients.length - 1 ? <span className="cd-comma" aria-hidden="true">,</span> : end && <span className="cd-comma" aria-hidden="true">{end}</span>}
           </li>
         );
       })}

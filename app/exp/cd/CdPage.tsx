@@ -20,7 +20,7 @@ import './cd.css';
 
 // the clients, with their logos (as in the hero, HeroVertical) for the hover
 const C = (f: string) => `/assets/clients/${f}`;
-const CLIENTS: Client[] = [
+export const CLIENTS: Client[] = [
   { name: 'SpaceX', src: C('spacex.svg'), ratio: 400 / 50 },
   { name: 'OpenAI', src: C('openai.svg'), ratio: 269.6592 / 72.5157 },
   { name: 'Andreessen Horowitz', src: C('a16z.svg'), ratio: 733.88 / 260.74, boost: 1.3 },
@@ -45,7 +45,7 @@ const CLIENTS: Client[] = [
 
 // The gallery, in reading order down each column (CSS columns). Each tile has its own shape so the
 // columns stagger; the clips (16:9) fill their tile.
-const CLIPS: Clip[] = [
+export const CLIPS: Clip[] = [
   ['wispr-bts', 'Wispr Flow: the crew at the Porsche', '4 / 3'],
   ['fishaudio-set', 'Fish Audio: the set', '16 / 9'],
   ['pocketfm-pitch', 'Pocket FM: Rick in the board room', '4 / 5'],
@@ -67,7 +67,7 @@ const CLIPS: Clip[] = [
 
 /* Words split for the text animations (cd.css, [data-reveal]): each word in a clip box (cd-w) holding
    the part that moves (cd-wi), numbered from `from` so a block's words follow one another. */
-function Words({ text, from = 0 }: { text: string; from?: number }) {
+export function Words({ text, from = 0 }: { text: string; from?: number }) {
   const words = text.split(' ');
   return (
     <>
@@ -82,7 +82,7 @@ function Words({ text, from = 0 }: { text: string; from?: number }) {
     </>
   );
 }
-const d0 = (ms: number, step?: number) => ({ '--d0': `${ms}ms`, ...(step ? { '--st': `${step}ms` } : {}) }) as CSSProperties;
+export const d0 = (ms: number, step?: number) => ({ '--d0': `${ms}ms`, ...(step ? { '--st': `${step}ms` } : {}) }) as CSSProperties;
 
 // before paint: hide what will animate in (not for reduced motion), so the first frame is the start;
 // and the hero's clients version from the address (?clients=names|logos; the names at the headline's size, title, by default; CdOptions), so it never flashes
@@ -145,28 +145,35 @@ export default function CdPage() {
         <CdGallery clips={CLIPS} />
       </section>
 
-      <section className="cd-process" aria-labelledby="cd-process-title">
-        <Ticks />
-        <Ticks at="bottom" />
-        <div className="cd-col">
-          <h2 id="cd-process-title" className="cd-h2" data-reveal="" style={d0(0)}><Words text="Our creative process" /></h2>
-          <div className="cd-copy cd-process-copy">
-            <p data-reveal="fade" style={d0(300, 10)}>
-              <Words text="It starts with coming up with the brief. We’re not handed a brief. Creative brainstorming is very fun (the ideas in the room can range from let’s hire Charlie Puth to make this video, to let’s give a Porche as a challenge, we find inspiration in unexpected places." />
-            </p>
-            <p data-reveal="fade" style={d0(450, 10)}>
-              <Words text="We obsess over the details, challenge the expected, and push beyond what’s comfortable. Exceptional work doesn’t need an explanation. It speaks for itself" />
-            </p>
-          </div>
-        </div>
-        <ScrubVideo
-          dir="/assets/cd/akai-seq" count={636} poster="/assets/cd/process-akai.jpg" label="Akai: the founder on set with the director"
-          caption={
-            <p className="cd-step" data-reveal="fade" style={d0(0, 18)}>
-              <Words text="Every launch begins with going deep into the product with the founder" />
-            </p>
-          } />
-      </section>
+      <CdProcess />
     </main>
+  );
+}
+
+/* the creative process: the heading, its copy, and the clip played by the scroll (also /exp/cd-2) */
+export function CdProcess() {
+  return (
+    <section className="cd-process" aria-labelledby="cd-process-title">
+      <Ticks />
+      <Ticks at="bottom" />
+      <div className="cd-col">
+        <h2 id="cd-process-title" className="cd-h2" data-reveal="" style={d0(0)}><Words text="Our creative process" /></h2>
+        <div className="cd-copy cd-process-copy">
+          <p data-reveal="fade" style={d0(300, 10)}>
+            <Words text="It starts with coming up with the brief. We’re not handed a brief. Creative brainstorming is very fun (the ideas in the room can range from let’s hire Charlie Puth to make this video, to let’s give a Porche as a challenge, we find inspiration in unexpected places." />
+          </p>
+          <p data-reveal="fade" style={d0(450, 10)}>
+            <Words text="We obsess over the details, challenge the expected, and push beyond what’s comfortable. Exceptional work doesn’t need an explanation. It speaks for itself" />
+          </p>
+        </div>
+      </div>
+      <ScrubVideo
+        dir="/assets/cd/akai-seq" count={636} poster="/assets/cd/process-akai.jpg" label="Akai: the founder on set with the director"
+        caption={
+          <p className="cd-step" data-reveal="fade" style={d0(0, 18)}>
+            <Words text="Every launch begins with going deep into the product with the founder" />
+          </p>
+        } />
+    </section>
   );
 }

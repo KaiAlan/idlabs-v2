@@ -1,0 +1,267 @@
+/* /exp/cd-2: /exp/cd (cd.css) told by the scroll. The opening section is three screens of scroll
+   holding one pinned screen, its scenes stacked and centred, Cd2Stage moving them in turn with the scroll. */
+
+/* the pinned screen; the wordmark stays at its top while the scenes take turns */
+.cd2-stage { position: relative; height: 640vh; height: 640svh; margin: 0 -20px; } /* three scenes and the melt (Cd2Stage) */
+.cd2-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.cd2-scene {
+  position: absolute; inset: 0; padding: 0 20px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; will-change: transform, opacity, filter; transform-origin: 50% 50%;
+}
+.cd2-scene:not(.cd2-scene-title) { opacity: 0; } /* until Cd2Stage runs */
+.cd2-scene[data-on] { pointer-events: auto; }
+.cd2-scene > * { flex: none; }
+
+/* 1. the headline (--cd2-head: 48px, less on short screens; 28px on
+   phones), its column as wide as its longest line so the breaks stay where they are set */
+.cd2 .cd2-scene-title .cd-title { font-size: var(--cd2-head); }
+@media (min-width: 641px) { .cd2 .cd2-scene-title .cd-col { width: max-content; max-width: calc(100vw - 40px); } }
+
+/* 2. the clients: a label (the copy's mono caps), then the names, larger than /exp/cd's primary
+   (48px, rows at 1.5), in a wider column; smaller on short screens so the whole list fits. The names
+   move with the scroll (Cd2Stage), not on the reveal's clock. */
+.cd-js .cd2 .cd2-names[data-reveal] > li { opacity: 1; translate: none; transition: none; }
+html .cd.cd2 { --cd2-head: clamp(30px, 5.4svh, 48px); --cd-name: var(--cd2-head); --cd-lh: 1.5; }
+.cd2-label {
+  margin: 0;
+  font-size: 12px; line-height: 1.6; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cd-text);
+}
+.cd .cd2-names { width: auto; margin: 16px 0 0; }
+
+/* 3. the lead: a solid black building before "company", near the text's cap height, boiling all the
+   time with the client logos' filters (cd.css, cd-boil) */
+.cd2-building {
+  display: inline-block; width: 0.82em; height: 0.82em; vertical-align: -0.06em; color: #1a1a1a;
+  animation: cd-boil 480ms steps(1, end) infinite;
+}
+
+/* "downstream" melting (Cd2Melt): a canvas over the whole pinned screen, above everything on it */
+.cd2-drips { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+
+/* after the opening the page is dark, as the melt left it: the gallery and the creative process
+   on #0d0d0d, the type light */
+.cd2-dark {
+  --cd-ink: #f2f2f2; --cd-soft: #6f6f6f; --cd-text: #a6a6a6; --cd-fill: #1b1b1b;
+  position: relative; z-index: 1; background: #0d0d0d; color: var(--cd-ink);
+  margin: 0 -20px -160px; padding: 0 20px 160px;
+}
+
+/* The dark part as a blueprint, in black (after blueprint sheets: grid, ruled panels, mono captions,
+   dimension lines). White hairlines only; the type stays Season Mix and IBM Plex Mono. */
+.cd2-dark { --bp-line: rgba(255, 255, 255, 0.14); --bp-cap: #8c8c8c; --bp-frame: min(1268px, 100% - 40px); }
+/* the grid: 24px cells, every fifth line heavier, centred; faded in over the first screen so the top
+   meets the melt's flat dark */
+.cd2-bp {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.01) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: center 0;
+}
+/* the sheet's frame: two rules down the page, ruler ticks on their outer sides (every 24px, every
+   fifth longer) */
+.cd2-bp-frame {
+  position: absolute; top: 0; bottom: 0; left: 50%; translate: -50% 0; width: var(--bp-frame); z-index: 0; pointer-events: none;
+  border-inline: 1px solid var(--bp-line);
+}
+
+/* the captions: rows across the sheet, mono caps, a rule above the section rows */
+.cd2-bp-row {
+  position: relative; z-index: 1; width: var(--bp-frame); margin: 0 auto; box-sizing: border-box;
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 14px 20px;
+  font: 400 11px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--bp-cap);
+}
+.cd2-bp-row i { font-style: normal; color: var(--cd-ink); margin-right: 8px; }
+.cd2-bp-sec { border-top: 1px solid var(--bp-line); margin-top: 48px; margin-bottom: 40px; color: var(--cd-ink); }
+.cd2-bp-sec > span:last-child { color: var(--bp-cap); }
+.cd2 .cd2-bp-sec-process { margin-top: 200px; margin-bottom: 0; }
+.cd2 .cd-process { padding-top: 120px; }
+.cd2-bp-foot { border-top: 1px solid var(--bp-line); margin-top: 120px; align-items: center; }
+.cd2-cross { width: 44px; height: 44px; color: rgba(255,255,255,.55); }
+
+/* the dimension line across the gallery: end stops and a centred caption */
+.cd2-dim {
+  position: relative; z-index: 1; width: min(1188px, 100%); margin: 0 auto 28px; height: 11px;
+  border-inline: 1px solid rgba(255,255,255,.35);
+  background: linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.35)) center / 100% 1px no-repeat;
+  display: flex; justify-content: center; align-items: center;
+}
+.cd2-dim span {
+  padding: 0 12px; background: #0d0d0d;
+  font: 400 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--bp-cap);
+}
+/* each card's place drawn on the sheet before it arrives: a dashed box with its diagonals, blanking
+   the grid, and a figure caption (its number and shape), so a card flying in lands on its drawing.
+   The card covers it once it has settled. */
+.cd2-dark .cd-gallery { counter-reset: fig; }
+.cd2-dark .cd-slot { position: relative; counter-increment: fig; }
+.cd2-dark .cd-slot > .cd-card { position: relative; z-index: 1; }
+.cd2-dark .cd-slot::before {
+  content: ''; position: absolute; inset: 0; border-radius: 18px;
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.6px), rgba(255,255,255,.13) 50%, transparent calc(50% + 0.6px)),
+    linear-gradient(to bottom right, transparent calc(50% - 0.6px), rgba(255,255,255,.13) 50%, transparent calc(50% + 0.6px)),
+    #0d0d0d;
+}
+.cd2-dark .cd-slot::after {
+  content: 'FIG. ' counter(fig, decimal-leading-zero) '  —  ' attr(data-ar);
+  position: absolute; left: 16px; bottom: 14px; padding: 3px 6px; background: #0d0d0d; white-space: pre;
+  font: 400 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--bp-cap);
+}
+
+/* the gallery comes up from below once the opening has scrolled away */
+.cd2 .cd-card, .cd2 .cd-card .cd-video { border-radius: 18px; } /* rounder than /exp/cd's 6px */
+.cd2-work { position: relative; z-index: 1; padding-top: 72px; overflow-x: clip; }
+.cd2-work .cd-gallery { margin-top: 0; }
+
+@media (max-width: 640px) {
+  html .cd.cd2 { --cd2-head: 28px; }
+  .cd2-work { padding-top: 48px; }
+  .cd2-bp-frame { display: none; }
+  .cd2-bp-row { width: 100%; padding: 12px 0; font-size: 10px; }
+  .cd2 .cd2-bp-sec-process { margin-top: 120px; }
+}
+
+/* The headline played in as jitter.video's (Cd2Title). Only with html.cd-js (not reduced motion);
+   nothing shows until the fonts are in (.cd2-go). */
+.cd2-tw, .cd2-lo, .cd2-lc { display: inline-block; }
+.cd2-tw { transform-origin: 50% 60%; }
+.cd-js .cd2-title .cd2-tw { opacity: 0; }
+/* a word cuts on at 150%, slams to 74% in 190ms, eases back to 100% over 720ms (Jitter's curves) */
+.cd-js .cd2-go .cd2-tw { animation: cd2-slam 910ms var(--dl) forwards; }
+@keyframes cd2-slam {
+  0% { opacity: 1; transform: scale(1.5); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+  20.9% { opacity: 1; transform: scale(0.74); animation-timing-function: cubic-bezier(0.16, 0, 0.23, 1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* a letter in another face (Cd2Title cuts [data-f] from face to face; gone, it is in Season Mix): the
+   letter keeps its place, drawn over by the face, centred on it */
+.cd2-l { position: relative; }
+.cd-js .cd2-l[data-f] { -webkit-text-fill-color: transparent; }
+.cd-js .cd2-l[data-f]::before {
+  content: attr(data-ch); position: absolute; left: 50%; top: 0; translate: -50% 0;
+  -webkit-text-fill-color: currentColor; white-space: pre;
+}
+.cd-js .cd2-l[data-f="1"]::before { font-family: var(--mono); font-size: 0.86em; top: 0.1em; }
+.cd-js .cd2-l[data-f="2"]::before { font-family: 'Instrument Serif', var(--serif); font-size: 1.12em; top: -0.08em; }
+.cd-js .cd2-l[data-f="3"]::before { font-family: 'Source Serif 4', var(--serif); font-style: italic; font-weight: 300; }
+.cd-js .cd2-l[data-f="4"]::before { font-family: Inter, var(--sans); font-weight: 200; text-transform: uppercase; font-size: 0.8em; top: 0.18em; }
+.cd-js .cd2-l[data-f="5"]::before { font-family: var(--mono); text-transform: uppercase; font-size: 0.78em; top: 0.2em; }
+
+/* the things that stand in for six letters: each pops in tipping from -20° to just past upright,
+   boils, shrinks away (Jitter's mascot keyframes), and its letter pops in from 125%. Meanwhile its
+   line parts to give it room and closes back as the letter returns (Cd2Title, planRoom). */
+.cd2-lo { position: relative; }
+.cd2-obj {
+  position: absolute; left: 50%; z-index: 1; /* centred by its margin, standing on its baseline (Cd2Title) */
+  color: var(--cd-ink); transform: scale(0); transform-origin: 50% 100%; pointer-events: none;
+}
+.cd2-obj svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* the letters of a word holding a thing move one by one as the line parts round it (Cd2Title) */
+.cd2-lb { display: inline-block; }
+.cd-js .cd2-title .cd2-lc { opacity: 0; }
+.cd-js .cd2-go .cd2-lc { animation: cd2-pop 500ms var(--pop) forwards; }
+.cd-js .cd2-go .cd2-obj { animation: cd2-obj var(--run) var(--at) both; }
+.cd-js .cd2-go .cd2-obj svg { animation: cd-boil 480ms steps(1, end) var(--at) 4; }
+@keyframes cd2-obj {
+  0% { transform: scale(0) rotate(-20deg); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+  13.6% { transform: scale(1.11) rotate(2.2deg); animation-timing-function: cubic-bezier(0.2, 0, 0.28, 1); }
+  36.4% { transform: scale(1) rotate(0deg); }
+  63.6% { transform: scale(1) rotate(0deg); animation-timing-function: cubic-bezier(0.74, 0, 0, 1); }
+  100% { transform: scale(0) rotate(0deg); }
+}
+@keyframes cd2-pop {
+  0% { opacity: 1; transform: scale(1.25); animation-timing-function: cubic-bezier(0, 0, 0, 1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Text on the blueprint sits in a blank, ruled panel (the grid stops at its edge), as a sheet's
+   title block does: the caption rows, the process heading and copy, the line over the clip. */
+.cd2-bp-row { background: #0d0d0d; border-inline: 1px solid var(--bp-line); }
+.cd2-dark .cd-process > .cd-col {
+  position: relative; z-index: 1; box-sizing: border-box; width: min(600px, 100%);
+  padding: 44px 44px 48px; background: #0d0d0d; border: 1px solid var(--bp-line);
+}
+.cd2-dark .cd-step {
+  display: inline-block; padding: 12px 18px; background: #0d0d0d; border: 1px solid var(--bp-line);
+}
+@media (max-width: 640px) {
+  .cd2-bp-row { border-inline: 0; }
+  .cd2-dark .cd-process > .cd-col { padding: 28px 22px 32px; }
+}
+
+/* The lead's sequence (Cd2Stage sets [data-play] as it comes in; it resets once it has gone):
+   1. its words rise into place one after another (--i, from the page's Words);
+   2. the gap after "only" opens and the building pops in (and goes on boiling);
+   3. the claim, "10M views on any launch we do", lights word by word from the grey to the ink.
+   Before it plays the building takes no room and the claim is in the grey. Reduced motion: all set. */
+.cd2-bld { display: inline-block; vertical-align: baseline; white-space: nowrap; }
+.cd2-bld .cd2-building { margin-right: 0.28em; }
+.cd-js .cd2-scene-lead .cd-w { overflow: clip; overflow-clip-margin: 0.12em; padding-bottom: 0.08em; margin-bottom: -0.08em; vertical-align: top; }
+.cd-js .cd2-scene-lead .cd-wi { display: inline-block; transform: translateY(105%); }
+.cd-js .cd2-scene-lead[data-play] .cd-wi {
+  transform: none;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) calc(80ms + var(--i, 0) * 32ms);
+}
+.cd-js .cd2-scene-lead .cd2-bld { width: 0; }
+.cd-js .cd2-scene-lead .cd2-building { transform: scale(0) rotate(-20deg); transform-origin: 50% 100%; }
+.cd-js .cd2-scene-lead[data-play] .cd2-bld { width: 1.1em; transition: width 520ms cubic-bezier(0.65, 0, 0.35, 1) 1.15s; }
+.cd-js .cd2-scene-lead[data-play] .cd2-building {
+  transform: none;
+  transition: transform 620ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.45s;
+}
+.cd-js .cd2-scene-lead .cd-lead a .cd-wi { color: var(--cd-soft); }
+.cd-js .cd2-scene-lead[data-play] .cd-lead a .cd-wi {
+  color: var(--cd-ink);
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) calc(80ms + var(--i, 0) * 32ms),
+    color 420ms ease calc(2.1s + (var(--i, 0) - 15) * 90ms);
+}
+
+/* centred (2026-11-26): the headline, the lead, and the clients (their label and the rows of names,
+   each name's logo on hover centred on it rather than where it starts). The names' boxes carry the
+   space after them (0.3em, cd.css), so the list is padded as much on its left to keep the rows true. */
+.cd2 .cd2-scene-title .cd-title, .cd2 .cd2-scene-lead .cd-lead, .cd2 .cd2-label { text-align: center; }
+.cd .cd2-names { justify-content: center; padding-left: 0.3em; }
+.cd2 .cd2-names .cd-logo { left: calc(50% - 0.15em); translate: -50% -50%; }
+.cd2 .cd2-names .cd-logo-ink { -webkit-mask-position: center; mask-position: center; }
+
+/* the design's measures (cd - 31, cd - 32; 2026-11-26): the headline as wide as its longest line
+   (about 615px at 48px), three lines; the names at the headline's size too, in a column wider than
+   the home page's 512; the lead at the headline's size, as wide as its longest line */
+/* sized with the names (14.8 of them), so the rows fall the same at any height: 2, 2, 2, 3, 3, 3 */
+.cd2-clients { width: min(calc(var(--cd-name) * 14.8), 100%); }
+.cd2 .cd2-scene-lead .cd-lead { font-size: var(--cd2-head); }
+@media (min-width: 641px) { .cd2 .cd2-scene-lead .cd-col { width: max-content; max-width: calc(100vw - 40px); } }
+
+/* the scales, at the screen's edges: ruler ticks along each edge (every 24px, every fifth longer) and a
+   number by every long one (Cd2Scale) */
+.cd2-scale { position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 0; pointer-events: none; }
+.cd2-scale-l, .cd2-scale-r {
+  position: absolute; top: 0; bottom: 0; width: 46px;
+  background:
+    repeating-linear-gradient(rgba(255,255,255,.11) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(rgba(255,255,255,.055) 0 1px, transparent 1px 24px);
+  background-size: 14px 100%, 7px 100%; background-repeat: no-repeat;
+}
+.cd2-scale-l { left: 0; background-position: left 0 top 0, left 0 top 0; text-align: left; }
+.cd2-scale-r { right: 0; background-position: right 0 top 0, right 0 top 0; text-align: right; }
+.cd2-scale span {
+  position: absolute; translate: 0 -50%;
+  font: 400 10px/1 var(--mono); letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.24);
+}
+.cd2-scale-l span { left: 20px; }
+.cd2-scale-r span { right: 20px; }
+@media (max-width: 640px) { .cd2-scale { display: none; } }
+
+/* the top of the dark fades the blueprint in (grid, frame, scales), so it meets the melt's flat dark:
+   a gradient laid over them, under the content (a mask on something this tall doesn't draw) */
+.cd2-bp-fade {
+  position: absolute; left: 0; right: 0; top: 0; height: 90vh; z-index: 0; pointer-events: none;
+  background: linear-gradient(#0d0d0d, rgba(13, 13, 13, 0));
+}

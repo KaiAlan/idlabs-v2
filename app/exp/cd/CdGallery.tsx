@@ -91,7 +91,7 @@ export default function CdGallery({ clips }: { clips: Clip[] }) {
       {columns(clips, n).map((col, ci) => (
         <div className="cd-gcol" key={ci}>
           {col.map(([slug, label, ratio], ri) => (
-            <div className="cd-slot" key={slug}>
+            <div className="cd-slot" key={slug} data-ar={ratio.replace(/\s/g, '')}>
               <div className="cd-card" style={{ ...start(ci, ri, n), '--ar': ratio } as CSSProperties}>
                 <LoopVideo className="cd-video" src={`/assets/cd/${slug}.mp4`} poster={`/assets/cd/${slug}.jpg`} label={label} />
               </div>

@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 export default function CdReveal() {
   useEffect(() => {
     if (!document.documentElement.classList.contains('cd-js')) return;
-    const blocks = [...document.querySelectorAll<HTMLElement>('.cd [data-reveal]')];
+    // blocks inside [data-reveal-own] are played by their own section (/exp/cd-2's stage, Cd2Stage)
+    const blocks = [...document.querySelectorAll<HTMLElement>('.cd [data-reveal]')].filter((b) => !b.closest('[data-reveal-own]'));
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
