@@ -55,15 +55,17 @@
    the names sit a fixed 64px under the copy, and the space above the headline takes up the rest. The
    column above them (headline, copy) is --cd-block tall (measured). */
 .cd {
-  --cd-name: 48px; --cd-row: calc(var(--cd-name) * 1.5);
+  --cd-name: 48px; --cd-lh: 1.5; --cd-row: calc(var(--cd-name) * var(--cd-lh));
   --cd-block: 360px;
 }
-.cd-hero { padding-top: max(140px, calc(100svh - var(--cd-block) - 64px - 2 * var(--cd-row) - 40px)); }
+/* the variant at the headline’s size (?clients=title): Season Mix 35px as .cd-title (26px on phones), the rows opened up to 1.65, and three of them on the first screen, not two */
+html[data-cd-clients="title"] .cd { --cd-name: 35px; --cd-lh: 1.65; --cd-rows: 3; }
+.cd-hero { padding-top: max(140px, calc(100svh - var(--cd-block) - 64px - var(--cd-rows, 2) * var(--cd-row) - 40px)); }
 .cd-names {
   list-style: none; padding: 0; margin-bottom: 0;
   margin-top: 64px;
   display: flex; flex-wrap: wrap;
-  font: 400 var(--cd-name)/1.5 var(--cd-serif); letter-spacing: 0;
+  font: 400 var(--cd-name)/var(--cd-lh) var(--cd-serif); letter-spacing: 0;
 }
 /* each name's box runs up to the next (its comma and the space are inside it), so the pointer is
    always over one */
@@ -75,9 +77,21 @@
 .cd-comma { color: #c6c6c6; }
 .cd-logo {
   position: absolute; left: 0; top: 50%; translate: 0 -50%;
-  background: #1a1a1a; opacity: 0; pointer-events: none;
-  -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat;
+  opacity: 0; pointer-events: none;
   transition: opacity 200ms ease;
+}
+.cd-logo-ink {
+  position: absolute; inset: 0; background: #1a1a1a;
+  -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat;
+}
+/* the boil (CdClients): while a logo shows, its edges wobble, the four filters in turn, 120ms each */
+.cd-boil-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.cd-names li[data-on] .cd-logo { animation: cd-boil 480ms steps(1, end) infinite; }
+@keyframes cd-boil {
+  0% { filter: url(#cd-boil-0); }
+  25% { filter: url(#cd-boil-1); }
+  50% { filter: url(#cd-boil-2); }
+  75% { filter: url(#cd-boil-3); }
 }
 .cd-names[data-active] .cd-name,
 .cd-names[data-active] .cd-comma { color: #e6e6e6; filter: blur(5px); }
@@ -100,6 +114,11 @@
 .cd-lead a { color: var(--cd-ink); text-decoration: none; transition: color 160ms ease; }
 .cd-lead a:hover { color: #4a4a4a; }
 .cd-lead a:focus-visible { outline: 1px solid var(--cd-soft); outline-offset: 3px; }
+/* Names at title size (?clients=title): hovering the lead, its grey goes paler and the claim (the link)
+   boils as the client logos do (CdClients' filters, cd-boil) */
+html[data-cd-clients="title"] .cd-lead { transition: color 260ms ease; }
+html[data-cd-clients="title"] .cd-lead:hover { color: #c8c8c8; }
+html[data-cd-clients="title"] .cd-lead:hover a { animation: cd-boil 480ms steps(1, end) infinite; }
 .cd-gallery {
   --gap: clamp(12px, 1.7vw, 26px);
   display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: var(--gap); align-items: start;
@@ -259,7 +278,8 @@ html[data-cd-lines="off"] .cd-rails, html[data-cd-lines="off"] .cd-ticks { displ
 }
 @media (max-width: 640px) {
   .cd { --cd-name: 28px; --cd-block: 380px; }
-  .cd-hero { padding-top: max(110px, calc(100svh - var(--cd-block) - 48px - 2 * var(--cd-row) - 32px)); }
+  html[data-cd-clients="title"] .cd { --cd-name: 26px; }
+  .cd-hero { padding-top: max(110px, calc(100svh - var(--cd-block) - 48px - var(--cd-rows, 2) * var(--cd-row) - 32px)); }
   .cd-names, .cd .cd-home-clients { margin-top: 48px; }
   .cd-title { font-size: 26px; }
   .cd-copy { margin-top: 48px; }

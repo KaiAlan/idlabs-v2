@@ -85,9 +85,9 @@ function Words({ text, from = 0 }: { text: string; from?: number }) {
 const d0 = (ms: number, step?: number) => ({ '--d0': `${ms}ms`, ...(step ? { '--st': `${step}ms` } : {}) }) as CSSProperties;
 
 // before paint: hide what will animate in (not for reduced motion), so the first frame is the start;
-// and the hero's clients version from the address (?clients=logos; CdOptions), so it never flashes
+// and the hero's clients version from the address (?clients=names|logos; the names at the headline's size, title, by default; CdOptions), so it never flashes
 // and whether the margin lines show (off unless ?lines=on)
-const BEFORE_PAINT = "var d=document.documentElement,q=new URLSearchParams(location.search);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('cd-js');d.dataset.cdClients=q.get('clients')==='logos'?'logos':'names';d.dataset.cdLines=q.get('lines')==='on'?'on':'off'";
+const BEFORE_PAINT = "var d=document.documentElement,q=new URLSearchParams(location.search);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('cd-js');var c=q.get('clients');d.dataset.cdClients=c==='logos'||c==='names'?c:'title';d.dataset.cdLines=q.get('lines')==='on'?'on':'off'";
 
 /* a pair of the small squares on the margin lines, at this point of the page (cd.css .cd-ticks) */
 const Ticks = ({ at }: { at?: 'top' | 'bottom' }) => (
