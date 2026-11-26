@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
 
 /* A silent looping clip that plays only while it is on screen (and not at all for people who ask
    for reduced motion: they see the poster). Keeps sixteen gallery videos from all decoding at once.
-   In the names-at-title-size version (html[data-cd-clients="title"], the tabs) the clips run at 1.5x. */
-const rate = () => (document.documentElement.dataset.cdClients === 'title' ? 1.5 : 1);
+   In the names-at-title-size version (html[data-cd-clients="title"], the tabs) the clips run at 1.2x. */
+const rate = () => (document.documentElement.dataset.cdClients === 'title' ? 1.2 : 1);
 export default function LoopVideo({ src, poster, label, className }: { src: string; poster: string; label: string; className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
 
