@@ -22,9 +22,9 @@ const COLUMNS: { title: string; links: Link[] }[] = [
   {
     title: 'Join us', links: [
       { label: 'About', href: '/about' }, // the firm and its co-founders (2026-11-17)
-      { label: 'Creative director', href: 'https://identitylab.notion.site/Creative-Director-at-a-Potential-1B-Startup-3fbac327b7b780748932db56fbd3a963' },
-      { label: 'Head of growth', href: 'https://identitylab.notion.site/Head-of-Growth-at-a-Potential-1B-Startup-3ffac327b7b7805e855be65177bac10c' },
-      { label: 'Thinker-writer', href: 'https://identitylab.notion.site/Thinker-Writer-at-a-Potential-1B-Startup-2b6ac327b7b781e5bc8bec6840e86363' },
+      { label: 'Creative director', href: '/careers/creative-director' },
+      { label: 'Head of growth', href: '/careers/head-of-growth' },
+      { label: 'Thinker-writer', href: '/careers/thinker-writer' },
     ],
   },
   // Instagram and Substack hidden for now

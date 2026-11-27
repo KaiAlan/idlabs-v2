@@ -1,7 +1,6 @@
 import { Fragment, type CSSProperties } from 'react';
 import { CLIENTS, CLIPS, d0 } from '../cd/CdPage';
 import CdClients from '../cd/CdClients';
-import CdGallery from '../cd/CdGallery';
 import CdReveal from '../cd/CdReveal';
 import LoopVideo from '../cd/LoopVideo';
 import Cd3Grid from './Cd3Grid';
@@ -9,6 +8,7 @@ import Cd3Props from './Cd3Props';
 import Cd3Scroll from './Cd3Scroll';
 import Cd3Wrap from './Cd3Wrap';
 import Cd3Clapper from './Cd3Clapper';
+import Cd3Gallery from './Cd3Gallery';
 import '../cd/cd.css';
 import './cd3.css';
 
@@ -82,12 +82,21 @@ export default function Cd3Page() {
 
       {/* 3. the claim and the gallery */}
       <section className="cd3-grid cd3-work" aria-label="Behind the scenes" data-step="">
-        <p className="cd3-lead cd3-span" data-reveal="" style={d0(0, 22)} data-p="0.8 0.3">
-          <T text="We’re the only company in the world with the ability and track record to guarantee" />{' '}
-          <a href="/launches"><T text="10M views on any launch we do" from={15} tone="ink" /></a>
-          <T text=". Our creative process is downstream of this." from={22} />
-        </p>
-        <div className="cd3-span cd3-gallery"><CdGallery clips={CLIPS} /></div>
+        {/* the claim, pinned at the top of the screen with the clips as a reel turning past under it
+            (Cd3Reel), or the collage bursting out of one card (Cd3Burst), by the tabs; /exp/cd's gallery
+            under it on phones */}
+        <div className="cd3-span cd3-gallery">
+          <Cd3Gallery
+            clips={CLIPS}
+            head={
+              <p className="cd3-lead" data-reveal="" style={d0(0, 22)} data-p="0.8 0.3">
+                <T text="We’re the only company in the world with the ability and track record to guarantee" />{' '}
+                <a href="/launches"><T text="10M views on any launch we do" from={15} tone="ink" /></a>
+                <T text=". Our creative process is downstream of this." from={22} />
+              </p>
+            }
+          />
+        </div>
       </section>
 
       {/* 4. the process */}

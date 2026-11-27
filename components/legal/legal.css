@@ -30,7 +30,7 @@ html[data-over-footer] .lg-veil { opacity: 0; }
 .lg-head { display: flex; flex-direction: column; gap: 20px; margin-bottom: 72px; }
 .lg-title {
   font-family: 'Season Mix', var(--serif); font-weight: 400;
-  font-size: 32px; line-height: 1.3; letter-spacing: -0.02em; color: var(--lg-ink);
+  font-size: 32px; line-height: 1.3; letter-spacing: 0; color: var(--lg-ink);
 }
 .lg-title span { display: block; }
 .lg-title-pale { color: var(--lg-pale); }
@@ -40,7 +40,7 @@ html[data-over-footer] .lg-veil { opacity: 0; }
 .lg-sections { list-style: none; display: flex; flex-direction: column; gap: 44px; }
 .lg-section { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 96px; }
 /* section titles in the headline face, a step down from the title; the number pale, as the title's first line */
-.lg-h { display: flex; gap: 12px; margin-bottom: 4px; font-family: 'Season Mix', var(--serif); font-weight: 400; font-size: 20px; line-height: 1.3; letter-spacing: -0.02em; color: var(--lg-ink); }
+.lg-h { display: flex; gap: 12px; margin-bottom: 4px; font-family: 'Season Mix', var(--serif); font-weight: 400; font-size: 20px; line-height: 1.3; letter-spacing: 0; color: var(--lg-ink); }
 .lg-n { color: var(--lg-pale); }
 /* the running text in the hero's body caps (12px mono, 1.5); email addresses stay as written — they
    are contact details to copy exactly */

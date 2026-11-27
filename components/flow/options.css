@@ -12,8 +12,8 @@
 .opt-tabs[data-on], .opt-tabs-open[data-on] { opacity: 1; visibility: visible; pointer-events: auto; translate: -50% 0; transition: opacity 250ms ease, translate 250ms var(--ease-out), visibility 0s; }
 html:not([data-theme]) :is(.opt-tabs, .opt-tabs-open)[data-on], html[data-theme='dark'] :is(.opt-tabs, .opt-tabs-open)[data-on] { opacity: 0; visibility: hidden; pointer-events: none; } /* not over the hero */
 /* …except the hero's own bars (HeroOptions.tsx; /home-4's HeroIntroOptions.tsx) */
-html:not([data-theme]) :is(.opt-tabs[aria-label='Hero options'], .opt-tabs-open[aria-label='Open Hero options'], .opt-tabs[aria-label='Hero intro options'], .opt-tabs-open[aria-label='Open Hero intro options'])[data-on],
-html[data-theme='dark'] :is(.opt-tabs[aria-label='Hero options'], .opt-tabs-open[aria-label='Open Hero options'], .opt-tabs[aria-label='Hero intro options'], .opt-tabs-open[aria-label='Open Hero intro options'])[data-on] { opacity: 1; visibility: visible; pointer-events: auto; }
+html:not([data-theme]) :is(.opt-tabs[aria-label='Hero options'], .opt-tabs-open[aria-label='Open Hero options'], .opt-tabs[aria-label='Hero intro options'], .opt-tabs-open[aria-label='Open Hero intro options'], .opt-tabs[aria-label='Gallery options'], .opt-tabs-open[aria-label='Open Gallery options'])[data-on],
+html[data-theme='dark'] :is(.opt-tabs[aria-label='Hero options'], .opt-tabs-open[aria-label='Open Hero options'], .opt-tabs[aria-label='Hero intro options'], .opt-tabs-open[aria-label='Open Hero intro options'], .opt-tabs[aria-label='Gallery options'], .opt-tabs-open[aria-label='Open Gallery options'])[data-on] { opacity: 1; visibility: visible; pointer-events: auto; }
 .opt-tabs span { display: inline-flex; align-items: center; gap: 10px; }
 .opt-tabs button {
   padding: 0; border: 0; background: none; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit;
