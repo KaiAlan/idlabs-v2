@@ -159,3 +159,11 @@
 
 /* a list item's bold lead-in (as the posting sets it): darker, not highlighted */
 .ed-lead { color: #111; }
+
+/* laptop-height screens (under 900px tall, e.g. 1280x832): the cover lower and the gaps around the title
+   tightened, so "The role" and its first lines show on the first screen; taller screens keep the full air */
+@media (max-height: 900px) and (min-width: 641px) {
+  .frame.ed-cover { height: clamp(180px, 26vh, 240px); }
+  .ed-hero { padding: 48px 0 40px; gap: 36px; }
+  .ed-body { padding-top: 8px; }
+}
