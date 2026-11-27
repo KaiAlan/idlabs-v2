@@ -10,6 +10,10 @@ export const MAIN_PAGES: { path: string; priority: number; changeFrequency: 'wee
   { path: '/', priority: 1, changeFrequency: 'weekly' },
   { path: '/about', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/launches', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/careers', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/careers/creative-director', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/careers/head-of-growth', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/careers/thinker-writer', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/privacy', priority: 0.2, changeFrequency: 'yearly' },
   { path: '/terms', priority: 0.2, changeFrequency: 'yearly' },
 ];

@@ -1,0 +1,161 @@
+/* The roles as long reads (EdRole: /careers/creative-director, /head-of-growth, /thinker-writer), in the site's design language: the white
+   page between the rails (legal.css's chrome), a cover from rail to rail, the 512px column, the text in IBM
+   Plex Mono caps, Season Mix for display (tracking 0; +0.015em at 20px), the greys of /careers (ink
+   #4a4a4a, quiet #8a8a8a, pale #ccc, rules #ebebeb), highlights black (#1f1f1f), bracketed counts,
+   square buttons and bullets.
+   One type scale (2026-11-27): mono 12px for everything set in mono; Season Mix at 20px and 32px only
+   (32 → 28 on phones). */
+
+@font-face { font-family: 'Season Mix'; src: url('/experiment/fonts/season-mix-regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+.ed {
+  --ink: #4a4a4a; --quiet: #8a8a8a; --pale: #ccc; --line: #ebebeb; --black: #1f1f1f; --char: #2a2c31;
+  --col: min(512px, 100% - 48px);
+  /* the rails' frame, as globals.css sizes .frame (1056 → 1440 from 1512w, capped by the screen's height) */
+  --frame-w: min(var(--frame-max), 100% - 48px); /* %: of where it is used, the page's width without the scrollbar, as the fixed rails' */
+  color: var(--ink); overflow-x: clip;
+  font-family: var(--mono); font-size: 12px; line-height: 1.7; letter-spacing: 0.01em;
+}
+.ed p { margin: 0; }
+.ed a { color: inherit; }
+.ed-pale { color: var(--pale); }
+.ed-hero, .ed-body, .ed-end { position: relative; z-index: 1; }
+.ed-article p, .ed-article li, .ed-hero { text-transform: uppercase; }
+
+@media (min-width: 960px) { .ed { --frame-w: max(880px, min(var(--frame-max), 100% - 48px, 100svh * 1008 / 832 + 48px)); } }
+
+/* ── buttons: square, mono caps (the role pages' .jr-btn) */
+.ed-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.ed .ed-btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px;
+  font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+  color: var(--quiet); background: #fff; border: 1px solid var(--pale); /* outline and type dim; a light grey fill and ink type on hover */
+  transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+.ed .ed-btn:hover, .ed .ed-btn:focus-visible { background: #f2f2f2; color: var(--ink); }
+.ed .ed-btn-solid { background: var(--black); border-color: var(--black); color: #fff; }
+.ed .ed-btn-solid:hover, .ed .ed-btn-solid:focus-visible { background: #000; border-color: #000; color: #fff; }
+.ed-btn span { display: inline-block; transition: translate 320ms cubic-bezier(.2, .7, .2, 1); }
+.ed-btn:hover span { translate: 2px -2px; }
+
+/* ── the hero: in the column, as /careers' head; the title larger */
+/* the hero: the cover from rail to rail under the header (its rules on the rails, a hairline under it),
+   then the title and the ways to apply in the column */
+.ed-hero { padding: 80px 0 72px; display: flex; flex-direction: column; align-items: center; gap: 56px; }
+.frame.ed-cover { /* the site's .frame (globals.css), as the rails are: always exactly their width */
+  min-height: 0; padding: 0; height: clamp(200px, 34vh, 320px); overflow: hidden;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff;
+  border-inline: 1px solid #e0e0e0; /* the rails carried down its sides (globals.css .rails-light) */
+}
+.ed-cover .dc-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.ed-hero-text { width: var(--col); display: flex; flex-direction: column; gap: 32px; }
+.ed .ed-back { display: inline-flex; gap: 8px; align-self: flex-start; font-size: 12px; letter-spacing: 0.08em; color: var(--quiet); text-decoration: none; }
+.ed-back:hover { color: var(--ink); }
+.ed-back span { transition: translate 200ms var(--ease-out); }
+.ed-back:hover span { translate: -3px 0; }
+.ed-title { margin: 0; font-family: 'Season Mix', var(--serif); font-weight: 400; letter-spacing: 0; font-size: 32px; line-height: 1.1; color: var(--ink); text-transform: none; }
+.ed-title span { display: block; }
+
+/* ── the body: the column */
+.ed-body { width: var(--col); margin: 0 auto; padding: 24px 0 120px; }
+.ed-article { min-width: 0; }
+
+/* ── parts and chapters */
+.ed-part { display: flex; flex-direction: column; gap: 16px; padding-bottom: 112px; scroll-margin-top: 96px; }
+.ed-part-h {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin: 0 0 16px; padding-top: 20px; border-top: 1px solid var(--line);
+  font-family: 'Season Mix', var(--serif); font-weight: 400; letter-spacing: 0; font-size: 32px; line-height: 1.3; color: var(--ink);
+}
+.ed-part-n { flex: none; order: 1; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; line-height: 1; color: var(--quiet); } /* on the title's line, at the right, as /careers' [03] */
+
+.ed-ch { display: flex; flex-direction: column; gap: 16px; padding-top: 48px; scroll-margin-top: 96px; }
+.ed-ch:first-of-type { padding-top: 4px; }
+.ed-ch-h { position: relative; margin: 0 0 4px; font-family: 'Season Mix', var(--serif); font-weight: 400; letter-spacing: 0.015em; font-size: 20px; line-height: 1.3; color: var(--ink); text-wrap: balance; }
+/* the chapter's number before its title, pale (as the live role page's step heads) */
+.ed-ch-n { color: var(--pale); }
+
+/* ── the text */
+.ed-article strong { font-weight: 400; color: #fff; background: var(--black); padding: 2px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.ed-article em { font-style: italic; color: #111; }
+.ed-article a { text-decoration: underline; text-decoration-color: var(--pale); text-underline-offset: 3px; transition: text-decoration-color 160ms ease; }
+.ed-article a:hover { text-decoration-color: currentColor; }
+.ed-article p { position: relative; text-wrap: pretty; }
+
+/* the beats: the text's own short lines set apart, in Season Mix, in sentence case */
+.ed-article .ed-beat { margin: 24px 0; font-family: 'Season Mix', var(--serif); letter-spacing: 0; font-size: 32px; line-height: 1.25; text-transform: none; text-wrap: balance; }
+.ed-article .ed-beat-sm { font-size: 20px; letter-spacing: 0.015em; color: var(--quiet); margin: 8px 0; }
+.ed-article .ed-aha { margin: 24px 0; font-family: 'Season Mix', var(--serif); letter-spacing: 0; font-size: 32px; line-height: 1.25; text-transform: none; }
+.ed-aha strong { padding: 0 0.1em; white-space: nowrap; } /* "the aha moment." kept whole, on its own line */
+.ed-article .ed-lede { margin-top: 12px; font-family: 'Season Mix', var(--serif); font-size: 20px; line-height: 1.45; letter-spacing: 0.015em; text-transform: none; }
+.ed-article .ed-close { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); font-family: 'Season Mix', var(--serif); letter-spacing: 0; font-size: 32px; line-height: 1.25; text-transform: none; text-wrap: balance; }
+
+/* numbered steps: the number in its own gutter inside the column, as the shot list's */
+.ed-steps { list-style: none; counter-reset: ed; margin: 4px 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.ed-steps > li { counter-increment: ed; position: relative; padding-left: 40px; }
+.ed-steps > li::before { content: counter(ed, decimal-leading-zero); position: absolute; left: 0; color: var(--pale); }
+
+/* the band: the attention paragraph set apart in the column, between two rules; the last sentence large */
+.ed-band { margin: 40px 0; padding: 72px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.ed-band-in { display: flex; flex-direction: column; gap: 16px; }
+.ed-band-big { display: block; margin-top: 32px; font-family: 'Season Mix', var(--serif); font-size: 32px; line-height: 1.15; letter-spacing: 0; color: var(--ink); text-transform: none; text-wrap: balance; }
+
+/* the questions: each on its own ruled line, a square before it */
+.ed-qs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.ed-qs li { position: relative; padding: 12px 0 12px 28px; border-bottom: 1px solid var(--line); }
+.ed-qs li::before { content: ''; position: absolute; left: 0; top: calc(12px + 0.85em - 2px); width: 4px; height: 4px; background: var(--ink); }
+.ed-quote { color: #fff; background: var(--black); padding: 2px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* the storyboard: its three steps as ruled rows in the column, numbered [01]–[03]; the third, where
+   the aha moment lands, in black */
+.ed-board { list-style: none; counter-reset: bd; margin: 4px 0; padding: 0; border-top: 1px solid var(--line); }
+.ed-board > li { counter-increment: bd; position: relative; padding: 14px 0 14px 40px; border-bottom: 1px solid var(--line); }
+.ed-board > li::before { content: '[0' counter(bd) ']'; position: absolute; left: 0; color: var(--quiet); font-size: 12px; letter-spacing: 0.04em; }
+.ed-board > li:last-child { margin: -1px -12px 0; padding: 14px 12px 14px 52px; background: var(--black); color: #ebebeb; border-bottom-color: var(--black); }
+.ed-board > li:last-child::before { left: 12px; }
+.ed-board > li:last-child::before { color: #8c8c8c; }
+
+/* the details: a shot list */
+.ed-shots { list-style: none; counter-reset: sh; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.ed-shots li { counter-increment: sh; display: grid; grid-template-columns: 40px 1fr; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ed-shots li::before { content: counter(sh, decimal-leading-zero); color: var(--pale); }
+
+.ed-ex { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ed-ex li { padding: 12px 0; border-top: 1px solid var(--ink); font-family: 'Season Mix', var(--serif); font-size: 20px; letter-spacing: 0.015em; text-transform: none; }
+.ed-ex li span { color: var(--pale); }
+
+/* the checklist: tick what's you */
+.ed-aside { color: var(--quiet); }
+.ed-check { position: relative; }
+.ed-check ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.ed-check li { border-bottom: 1px solid var(--line); }
+.ed-check label { display: grid; grid-template-columns: 28px 1fr; align-items: start; padding: 12px 0; cursor: pointer; }
+.ed-check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ed-box { width: 10px; height: 10px; margin-top: 0.35em; border: 1px solid var(--ink); transition: background-color 160ms ease; }
+.ed-check input:checked + .ed-box { background: var(--black); border-color: var(--black); }
+.ed-check label:hover input:not(:checked) + .ed-box { background: var(--line); }
+.ed-check input:focus-visible + .ed-box { outline: 1px solid var(--ink); outline-offset: 3px; }
+.ed-check input:checked + .ed-box + span { color: #111; }
+
+/* ── the end: the role again, the two ways to apply */
+.ed-part:last-of-type { padding-bottom: 64px; }
+.ed-end { width: var(--col); margin: 0 auto; padding: 0 0 176px; display: flex; flex-direction: column; gap: 32px; }
+.ed-end-title { padding-top: 24px; border-top: 1px solid var(--line); font-family: 'Season Mix', var(--serif); font-size: 32px; line-height: 1.1; letter-spacing: 0; }
+.ed-end-title .ed-pale { display: block; }
+
+/* ── narrower: the rail and the notes go; the hung numbers come inside */
+@media (max-width: 1100px) {
+  }
+@media (max-width: 640px) {
+  .ed { --col: calc(100% - 40px); --frame-w: calc(100% - 40px); }
+  .ed-hero { padding-top: 72px; gap: 40px; }
+  .frame.ed-cover { height: 200px; }
+  /* the 32px step comes down to 28px, as legal.css's titles on phones */
+  .ed-title, .ed-end-title, .ed-part-h, .ed-band-big,
+  .ed-article .ed-aha, .ed-article .ed-beat, .ed-article .ed-close { font-size: 28px; }
+  .ed-article .ed-beat-sm { font-size: 20px; }
+  .ed-band { padding: 56px 0; }
+      .ed-ex { grid-template-columns: 1fr; }
+}
+
+/* a list item's bold lead-in (as the posting sets it): darker, not highlighted */
+.ed-lead { color: #111; }

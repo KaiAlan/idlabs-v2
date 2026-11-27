@@ -1,10 +1,7 @@
-/* /manifesto and /careers (ComingSoon.tsx), on the legal pages' styles (legal.css): one screen, the
+/* /manifesto (ComingSoon.tsx), on the legal pages' styles (legal.css): one screen, the
    column centred in it. */
 .lg.cs { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 24px; padding-block: 120px; }
 .cs-line { margin: 0; text-transform: uppercase; line-height: 1.5; color: var(--lg-quiet); text-wrap: pretty; }
-.cs-roles { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-transform: uppercase; }
-.cs-roles a { color: var(--lg-ink); text-decoration: none; border-bottom: 1px solid var(--lg-line); padding-bottom: 2px; transition: border-color 200ms ease; }
-.cs-roles a:hover, .cs-roles a:focus-visible { border-color: var(--lg-ink); }
 .cs-back { align-self: flex-start; margin-top: 16px; display: inline-flex; gap: 8px; color: var(--lg-ink); text-decoration: none; text-transform: uppercase; }
 .cs-back span { transition: translate 200ms ease; }
 .cs-back:hover span, .cs-back:focus-visible span { translate: -3px 0; }

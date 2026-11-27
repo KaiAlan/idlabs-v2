@@ -1,0 +1,202 @@
+/* /careers, variant A (app/careers/page.tsx), on the legal pages' styles (legal.css): the column at
+   512px (as /about), the title as /about's (32px), the pitch, the roles as a table. */
+
+/* at least a full screen, so the footer stays below the fold until you scroll */
+.lg.cr { width: min(512px, 100% - 64px); padding-bottom: 176px; box-sizing: border-box; min-height: 100vh; min-height: 100svh; }
+
+.cr-head { margin-bottom: 64px; }
+
+/* the pitch: the mono caps in grey, its figures in ink */
+.cr-pitch { display: flex; flex-direction: column; gap: 24px; margin-bottom: 96px; }
+.cr-pitch p { margin: 0; text-transform: uppercase; line-height: 1.6; color: var(--lg-quiet); text-wrap: pretty; }
+.cr-pitch b { font-weight: 400; color: var(--lg-ink); }
+
+/* the open roles as a table: a head row (Open roles at the left, [03] at the right) on a dark rule, then a row per
+   role — its number, its name in Season Mix, "View role ↗". On hover (or focus) the row's type goes
+   to ink, its name slides in a little and the arrow nudges; the other rows dim. No fill. */
+.lg .cr-roles a { display: grid; grid-template-columns: 64px 1fr auto; align-items: baseline; }
+.lg .cr-label { /* .lg: over legal.css's .lg h2 reset */
+  display: flex; justify-content: space-between;
+  margin-block: 0; padding-block: 0 12px;
+  font: inherit; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lg-quiet);
+  border-bottom: 1px solid var(--lg-line); /* as the rows' rules */
+}
+.cr-roles { list-style: none; margin: 0; padding: 0; }
+.cr-roles li { border-bottom: 1px solid var(--lg-line); }
+.lg .cr-roles a {
+  padding-block: 24px 22px; text-decoration: none; color: var(--lg-ink);
+  transition: color 360ms var(--ease-out), opacity 360ms var(--ease-out);
+}
+/* one row hovered (or focused): the others dim */
+.cr-roles:has(a:hover) a:not(:hover), .cr-roles:has(a:focus-visible) a:not(:focus-visible) { opacity: 0.3; }
+.cr-n { font-size: 11px; letter-spacing: 0.08em; color: var(--lg-quiet); transition: color 360ms var(--ease-out); }
+.cr-role {
+  /* trying the names in IBM Plex Mono caps, a step up from the body (Season Mix at 32px before) */
+  font-family: var(--mono); font-size: 14px; line-height: 1.4; letter-spacing: 0.04em; text-transform: uppercase;
+  transition: translate 520ms cubic-bezier(.2, .7, .2, 1);
+}
+.cr-go {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lg-quiet);
+  display: inline-flex; gap: 8px; transition: color 360ms var(--ease-out);
+}
+.cr-go span { display: inline-block; transition: translate 520ms cubic-bezier(.2, .7, .2, 1); }
+.cr-roles a:hover .cr-n, .cr-roles a:focus-visible .cr-n,
+.cr-roles a:hover .cr-go, .cr-roles a:focus-visible .cr-go { color: var(--lg-ink); }
+.cr-roles a:hover .cr-role, .cr-roles a:focus-visible .cr-role { translate: 12px 0; }
+.cr-roles a:hover .cr-go span, .cr-roles a:focus-visible .cr-go span { translate: 3px -3px; }
+.cr-roles a:focus-visible { outline: none; }
+
+/* a light rise on load, in order; none for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .cr-head, .cr-pitch, .cr-open { animation: cr-in 900ms var(--ease-out, cubic-bezier(.2,.7,.2,1)) both; }
+  .cr-pitch { animation-delay: 120ms; }
+  .cr-open { animation-delay: 240ms; }
+}
+@keyframes cr-in { from { opacity: 0; translate: 0 16px; } }
+
+@media (max-width: 640px) {
+  .lg.cr { width: calc(100% - 40px); }
+  .cr-pitch { margin-bottom: 64px; }
+  .lg .cr-roles a { grid-template-columns: 40px 1fr auto; }
+  .lg .cr-roles a { padding-block: 22px 20px; }
+  .cr-go { font-size: 0; gap: 0; align-self: center; } /* the arrow alone, centred on the row */
+  .cr-go span { font-size: 14px; }
+}
+
+/* ── a role's page (RolePage.tsx; jr-, as .rl is taken in flow.css): /careers' column and title; the sections each under a label row as
+   /careers' table head ("The role … [01]"); the text in the mono caps, in ink to read at length; the
+   sub-heads in Season Mix as legal.css's; figures in the column, the wide one breaking out of it. */
+.jr-back {
+  display: inline-flex; gap: 8px; margin-bottom: 40px;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lg-quiet); text-decoration: none;
+}
+.lg a.jr-back { text-decoration: none; }
+.jr-back span { transition: translate 200ms var(--ease-out); }
+.jr-back:hover, .jr-back:focus-visible { color: var(--lg-ink); }
+.jr-back:hover span, .jr-back:focus-visible span { translate: -3px 0; }
+
+.jr-section { display: flex; flex-direction: column; gap: 14px; margin-bottom: 96px; }
+.lg .jr-label { margin-bottom: 10px; }
+.jr-section p, .jr-section li { margin: 0; text-transform: uppercase; line-height: 1.6; text-wrap: pretty; }
+/* highlights as the home page's (sections.css .tc-hl.lit, flow.css .rl-hl): black ground, white type */
+.jr-section strong { font-weight: 400; color: #fff; background: #1f1f1f; padding: 2px 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.jr-section em { font-style: italic; color: #111; }
+.jr-note { color: var(--lg-quiet); }
+
+/* the "What this looks like" steps: Season Mix, their number pale (legal.css .lg-n) */
+.jr-h {
+  margin: 44px 0 4px; font-family: 'Season Mix', var(--serif); font-weight: 400;
+  font-size: 20px; line-height: 1.3; letter-spacing: 0.015em; color: var(--lg-ink); text-wrap: balance; /* Season Mix is drawn tight for large sizes: opened up a little at 20px */
+}
+.jr-label + .jr-h { margin-top: 8px; }
+
+/* numbered lists: the number in the pale mono at the left */
+.jr-ol { list-style: none; margin: 4px 0; padding: 0; counter-reset: rl; display: flex; flex-direction: column; gap: 18px; }
+.jr-ol > li { counter-increment: rl; position: relative; padding-left: 40px; }
+.jr-ol > li::before { content: counter(rl, decimal-leading-zero); position: absolute; left: 0; color: var(--lg-pale); }
+/* the bullets: a small square, centred on the first line (line-height 1.6: its middle at 0.8em) */
+.jr-ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.jr-ul > li { position: relative; padding-left: 28px; }
+.jr-ul > li::before { content: ''; position: absolute; left: 0; top: calc(0.8em - 2px); width: 4px; height: 4px; background: var(--lg-ink); }
+
+/* figures: a hairline frame; click for full size. The wide one breaks out to 1000px. */
+.jr-fig { margin: 18px 0 6px; }
+.jr-fig a { display: block; border: 1px solid var(--lg-line); background: #fff; cursor: zoom-in; }
+.jr-fig img { display: block; width: 100%; height: auto; }
+.jr-ol .jr-fig { max-width: 360px; }
+.jr-wide { width: min(1000px, 100vw - 64px); margin-inline: calc((100% - min(1000px, 100vw - 64px)) / 2); }
+
+/* the exemplar asset banks: two drawn slots with their names, until their links come */
+.jr-ex { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.jr-ex li { display: flex; flex-direction: column; gap: 10px; }
+.jr-slot {
+  aspect-ratio: 4 / 5; border: 1px solid var(--lg-line);
+  background: repeating-linear-gradient(135deg, transparent 0 9px, var(--lg-line) 9px 10px);
+}
+
+/* the two ways to apply, square as the site's buttons (services.css .sv-cta), in the mono caps: the form
+   solid black (#1f1f1f), the cold email outlined, filling black with white type on hover as they do */
+.jr-ctas { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 8px; }
+.lg a.jr-btn {
+  display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 20px; border-radius: 0;
+  font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+  color: var(--lg-ink); background: #fff; border: 1px solid #1f1f1f;
+  transition: border-color 200ms var(--ease-out), background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.lg a.jr-btn:hover, .lg a.jr-btn:focus-visible { background: #1f1f1f; border-color: #1f1f1f; color: #fff; }
+.lg a.jr-btn-solid { background: #1f1f1f; border-color: #1f1f1f; color: #fff; }
+.lg a.jr-btn-solid:hover, .lg a.jr-btn-solid:focus-visible { background: #000; border-color: #000; color: #fff; }
+.jr-btn span { display: inline-block; transition: translate 320ms cubic-bezier(.2, .7, .2, 1); }
+.jr-btn:hover span, .jr-btn:focus-visible span { translate: 2px -2px; }
+.jr-btn:focus-visible { outline: 1px solid var(--lg-ink); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .jr-ol > li { padding-left: 28px; }
+  .jr-ul > li { padding-left: 22px; }
+  .jr-wide { width: calc(100vw - 40px); margin-inline: calc((100% - (100vw - 40px)) / 2); }
+  .jr-ex { gap: 12px; }
+}
+
+/* the large cards (/exp/careers): wider than the column, laid
+   flat on the page with a very dim border; the clip dithered at each card's top. */
+.rc { margin-top: 0; }
+/* the roles' section breaks out of the 512px column to the cards' width, its label with it */
+.cr-open--large { width: min(1000px, 100vw - 64px); margin-inline: calc(50% - min(500px, 50vw - 32px)); }
+.rc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.lg .rc-card {
+  display: flex; flex-direction: column; height: 100%; padding: 12px 16px 16px; box-sizing: border-box;
+  background: #fff; border: 1px solid #f0f0f0; border-radius: 4px; text-decoration: none; color: var(--lg-ink);
+  transition: border-color 360ms var(--ease-out);
+}
+.rc-media { margin-inline: -4px; aspect-ratio: 4 / 5; }
+.dc-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.rc-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--lg-line);
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lg-ink);
+}
+.rc-chip { padding: 3px 7px; border: 1px solid var(--lg-line); border-radius: 4px; color: var(--lg-quiet); }
+.lg .rc-title {
+  margin: 24px 0 8px; font-family: 'Season Mix', var(--serif); font-weight: 400;
+  font-size: 26px; line-height: 1.1; letter-spacing: -0.01em; color: var(--lg-ink); text-transform: none;
+}
+.rc-line {
+  margin: 0 0 24px; font-size: 11px; line-height: 1.55; color: var(--lg-quiet);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+  min-height: calc(2em * 1.55); /* two lines on every card */
+}
+.rc-foot {
+  margin-top: auto; display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lg-quiet);
+}
+.rc-arrow {
+  display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--lg-line); border-radius: 4px;
+  color: var(--lg-ink); transition: background 360ms var(--ease-out), color 360ms var(--ease-out);
+}
+.rc-card:hover, .rc-card:focus-visible { outline: none; border-color: #e2e2e2; }
+.rc-card:hover .rc-arrow, .rc-card:focus-visible .rc-arrow { background: var(--lg-ink); color: #fff; }
+@media (max-width: 900px) { .cr-open--large { width: 100%; margin-inline: 0; } .rc-list { grid-template-columns: 1fr; } }
+
+/* the small cards (/careers): three across within the 512px column; each its clip (taller, 3:4), the name in
+   the mono caps, and "View role" with a bare arrow at the foot (no box; it nudges on hover). One inset (12px) all round. */
+.rc--small .rc-list { gap: 12px; }
+.lg .rc--small .rc-card { padding: 12px; }
+.rc--small .rc-media { margin-inline: 0; aspect-ratio: 3 / 4; }
+.lg .rc-name {
+  margin: 16px 0 0; font-family: var(--mono); font-weight: 400; font-size: 11px; line-height: 1.4;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--lg-ink);
+}
+.rc--small .rc-name { margin-top: 32px; } /* as much air under the clip as the clip leaves above its subject */
+.rc--small .rc-foot { margin-top: 8px; font-size: 10px; }
+.rc--small .rc-arrow { width: auto; height: auto; border: 0; background: none; font-size: 16px; line-height: 1; transition: translate 520ms cubic-bezier(.2, .7, .2, 1); }
+.rc--small .rc-card:hover .rc-arrow, .rc--small .rc-card:focus-visible .rc-arrow { background: none; color: var(--lg-ink); translate: 3px 0; }
+@media (max-width: 900px) { .rc--small .rc-list { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .rc--small .rc-list { grid-template-columns: 1fr 1fr; } }
+
+/* laptop-height screens (under 900px tall, e.g. 1280x832): the gaps above the cards tightened, so the cards'
+   names show on the first screen; taller screens keep the full air */
+@media (max-height: 900px) and (min-width: 641px) {
+  .lg.cr { padding-top: 112px; }
+  .cr-head { margin-bottom: 40px; }
+  .cr-pitch { gap: 16px; margin-bottom: 56px; }
+}

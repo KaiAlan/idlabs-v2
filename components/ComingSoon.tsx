@@ -6,19 +6,13 @@ import './legal/legal.css';
 import './coming-soon.css';
 import HtmlMark from './HtmlMark';
 
-/* /manifesto and /careers, until they are written: the legal pages' clean hero style (white, the hero's
-   rails and markers, the fixed wordmark and nav) with one screen in the middle — the page's name pale
-   over "Coming soon." in the hero's headline face, a line in IBM Plex Mono caps, and a way back. Careers
-   lists the open roles meanwhile (the footer's Join us links). The Fibonacci footer below, as the live
-   pages. */
+/* /manifesto, until it is written: the legal pages' clean hero style (white, the hero's rails and
+   markers, the fixed wordmark and nav) with one screen in the middle — the page's name pale over
+   "Coming soon." in the hero's headline face, a line in IBM Plex Mono caps, and a way back. The
+   Fibonacci footer below, as the live pages. (/careers has its own page since 2026-11-27.) */
 
-const ROLES = [
-  { label: 'Creative director', href: 'https://identitylab.notion.site/Creative-Director-at-a-Potential-1B-Startup-3fbac327b7b780748932db56fbd3a963' },
-  { label: 'Head of growth', href: 'https://identitylab.notion.site/Head-of-Growth-at-a-Potential-1B-Startup-3ffac327b7b7805e855be65177bac10c' },
-  { label: 'Thinker-writer', href: 'https://identitylab.notion.site/Thinker-Writer-at-a-Potential-1B-Startup-2b6ac327b7b781e5bc8bec6840e86363' },
-];
 
-export default function ComingSoon({ page }: { page: 'manifesto' | 'careers' }) {
+export default function ComingSoon({ page }: { page: 'manifesto' }) {
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.theme='light'" }} />
@@ -36,21 +30,12 @@ export default function ComingSoon({ page }: { page: 'manifesto' | 'careers' }) 
       <div className="frame lg-veil" aria-hidden="true" />
       <main className="lg cs">
         <h1 className="lg-title">
-          <span className="lg-title-pale">{page === 'manifesto' ? 'Manifesto' : 'Careers'}</span>
+          <span className="lg-title-pale">Manifesto</span>
           <span>Coming soon.</span>
         </h1>
         <p className="cs-line">
-          {page === 'manifesto'
-            ? 'We are writing down what we believe about distribution, and why we work the way we do.'
-            : 'This page is on its way. We are hiring now — the open roles are below.'}
+          We are writing down what we believe about distribution, and why we work the way we do.
         </p>
-        {page === 'careers' && (
-          <ul className="cs-roles" aria-label="Open roles">
-            {ROLES.map((r) => (
-              <li key={r.label}><a href={r.href} target="_blank" rel="noopener noreferrer">{r.label} <span aria-hidden="true">↗</span></a></li>
-            ))}
-          </ul>
-        )}
         <a className="cs-back" href="/"><span aria-hidden="true">←</span> Back to home</a>
       </main>
       <SiteFooter layout="fib" />

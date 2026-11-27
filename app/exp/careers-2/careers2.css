@@ -1,0 +1,90 @@
+/* /exp/careers-2: the pitch on a pinned screen, scene by scene (CareersStage), then who we hire, the
+   roles and "Join us." On the white page of /careers (legal.css's colours). */
+
+.c2 {
+  --ink: #4a4a4a; --pale: #ccc; --quiet: #8a8a8a; --line: #ebebeb;
+  position: relative; z-index: 1; color: var(--ink);
+  font-family: var(--mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.01em;
+}
+.c2-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.c2 p { margin: 0; }
+
+/* the stage: a screen of scroll per scene, holding one pinned screen */
+.c2-stage { position: relative; height: calc(var(--n) * 90svh + 100svh); }
+.c2-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.c2-scene {
+  position: absolute; inset: 0; padding: 96px 32px 72px;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  will-change: transform, filter;
+}
+.c2-js .c2-scene:not(:first-child) { visibility: hidden; }
+.c2-col { display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 1000px; }
+.c2-w { display: inline-block; white-space: pre; will-change: transform, opacity; }
+
+.c2-kick, .c2-sub { text-transform: uppercase; line-height: 1.5; color: var(--quiet); max-width: 460px; text-wrap: balance; }
+.c2-sub { color: var(--ink); }
+.c2-big {
+  font-family: 'Season Mix', var(--serif); font-weight: 400;
+  font-size: clamp(40px, 6.4vw, 92px); line-height: 1.04; letter-spacing: 0; color: var(--ink);
+  text-wrap: balance;
+}
+.c2-scene-fig .c2-big { font-size: clamp(120px, 24vw, 340px); line-height: 0.9; letter-spacing: 0; }
+.c2-scene-fig .c2-col { gap: 12px; }
+
+/* the counter and the progress rule at the screen's foot */
+.c2-hud {
+  position: absolute; left: 50%; bottom: 28px; translate: -50% 0; width: min(1056px - 48px, 100% - 48px);
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--quiet);
+}
+.c2-count b { font-weight: 400; color: var(--ink); }
+.c2-bar { height: 1px; background: var(--line); overflow: hidden; }
+.c2-bar i { display: block; height: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* who we hire, the roles, Join us: the column at 720px */
+.c2-hiring, .c2-open, .c2-join { width: min(720px, 100% - 64px); margin: 0 auto; }
+.c2-hiring { padding: 120px 0 0; }
+.c2-label { display: flex; justify-content: space-between; text-transform: uppercase; color: var(--quiet); font: inherit; margin: 0 0 24px; }
+.c2-label-rule { padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--ink); }
+.c2-list { list-style: none; margin: 0 0 24px; padding: 0; }
+.c2-list li { font-family: 'Season Mix', var(--serif); font-size: clamp(32px, 5vw, 56px); line-height: 1.12; letter-spacing: 0; }
+.c2-list li:nth-child(odd) { color: var(--ink); }
+.c2-list li:nth-child(even) { color: #a9a9a9; }
+.c2-tail { max-width: none; }
+
+.c2-open { padding: 160px 0 0; }
+.c2-roles { list-style: none; margin: 0; padding: 0; }
+.c2-roles li { border-bottom: 1px solid var(--line); }
+.c2-roles a { display: grid; grid-template-columns: 56px 1fr auto; align-items: baseline; padding: 26px 0 24px; color: var(--ink); text-decoration: none; }
+.c2-n { color: var(--pale); transition: color 200ms ease; }
+.c2-role { font-family: 'Season Mix', var(--serif); font-size: clamp(28px, 4vw, 44px); line-height: 1.1; letter-spacing: 0; transition: translate 320ms cubic-bezier(.2,.7,.2,1); }
+.c2-go { font-size: 18px; color: var(--pale); transition: color 200ms ease, translate 320ms cubic-bezier(.2,.7,.2,1); }
+.c2-roles a:hover .c2-n, .c2-roles a:focus-visible .c2-n { color: var(--ink); }
+.c2-roles a:hover .c2-role, .c2-roles a:focus-visible .c2-role { translate: 10px 0; }
+.c2-roles a:hover .c2-go, .c2-roles a:focus-visible .c2-go { color: var(--ink); translate: 3px -3px; }
+.c2-roles a:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+.c2-join {
+  padding: 200px 0 200px; text-align: center;
+  font-family: 'Season Mix', var(--serif); font-size: clamp(72px, 14vw, 200px); line-height: 0.95; letter-spacing: 0;
+}
+
+/* the sections rise in once as they enter (CareersStage sets data-in) */
+.c2-js [data-rise] { opacity: 0; translate: 0 28px; transition: opacity 800ms ease var(--d, 0ms), translate 900ms cubic-bezier(.2,.7,.2,1) var(--d, 0ms); }
+.c2-js [data-rise][data-in] { opacity: 1; translate: none; }
+
+/* reduced motion: no pinning; the scenes are plain sections, one after another */
+@media (prefers-reduced-motion: reduce) {
+  .c2-stage { height: auto; }
+  .c2-pin { position: static; height: auto; overflow: visible; }
+  .c2-scene { position: relative; inset: auto; min-height: 70svh; }
+  .c2-hud { display: none; }
+}
+
+@media (max-width: 640px) {
+  .c2-scene { padding: 88px 20px 72px; }
+  .c2-scene-fig .c2-big { font-size: clamp(96px, 34vw, 160px); }
+  .c2-hiring, .c2-open, .c2-join { width: calc(100% - 40px); }
+  .c2-roles a { grid-template-columns: 36px 1fr auto; padding: 20px 0 18px; }
+  .c2-hud { bottom: 20px; width: calc(100% - 40px); }
+}
