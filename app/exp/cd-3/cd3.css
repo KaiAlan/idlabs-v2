@@ -1,0 +1,194 @@
+/* /exp/cd-3: the Creative Director page, editorial. On top of /exp/cd's cd.css (its word reveals, the
+   clients' hover logos, the gallery's entrance).
+
+   The grid: 12 columns between 64px margins with 12px gutters at the frames' 1280 wide, all of it scaling
+   with the window (--u is one frame pixel), so the lines break as the frames do at any desktop width.
+   Type: Season Mix 66px for the headline and the clients (line 1.17; the names opened to 1.36), 50px for
+   the long statements (1.24), tracked -1% to -1.5%: the labs' display type all sits between -1% and -3% (measured
+   2026-11-27: Linear 72px at -2.2%, Cursor 72px at -3%, Stripe Press 138px at -3%, OpenAI 48px at
+   -3%); Season Mix is already tight, so the lightest end. Two tones as the frames: grey set-up, ink point.
+
+   Motion (the same measuring): the labs keep interface transitions short (0.1–0.3s) and their entrances
+   long on an ease-out-quart/expo curve (Anthropic and Cursor cubic-bezier(0.25, 1, 0.5, 1), Linear
+   cubic-bezier(0.32, 0.72, 0, 1) at 0.7s); cd.css's reveals already run 1.1s on
+   cubic-bezier(0.16, 1, 0.3, 1). The scrubbed parts (Cd3Scroll's --p, --r) follow the smoothed scroll
+   (Lenis) directly, no easing of their own. */
+
+.cd.cd3 {
+  --u: calc(100vw / 1280);
+  --m: calc(64 * var(--u));
+  --g: calc(12 * var(--u));
+  --d1: calc(66 * var(--u));
+  --d2: calc(50 * var(--u));
+  --ink: #4a4a4a;
+  --soft: #9b9b9b;
+  --label: #8a8a8a;
+  --cd-fill: #f4f4f4;
+  --p: 1; --r: 0; /* at rest (no scroll script, reduced motion): ink filled, nothing receded */
+  padding: 0;
+  color: var(--ink);
+}
+
+.cd3-grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g);
+  padding: 0 var(--m);
+}
+.cd3-span { grid-column: 1 / -1; }
+
+/* the 12 columns over the page (Cd3Grid, G) */
+.cd3-cols {
+  position: fixed; inset: 0; z-index: 40; pointer-events: none;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g);
+  padding: 0 var(--m);
+}
+.cd3-cols span { background: rgb(255 60 60 / 0.07); }
+
+/* the wordmark stays at the top centre as the page goes under it; drawn in difference, so it is the
+   frames' #4a4a4a on white (#b5b5b5 inverted) and turns light over the clips */
+.cd.cd3 .cd-mark { position: fixed; z-index: 30; color: #b5b5b5; mix-blend-mode: difference; }
+
+/* type */
+.cd3-display { margin: 0; font: 400 var(--d1)/1.17 var(--cd-serif); letter-spacing: -0.01em; color: var(--ink); }
+.cd3-lead { margin: 0; font: 400 var(--d2)/1.24 var(--cd-serif); letter-spacing: -0.015em; color: var(--soft); }
+.cd3-soft { color: var(--soft); }
+.cd3-lead a { color: inherit; text-decoration: none; }
+.cd3-lead a:focus-visible { outline: 1px solid var(--soft); outline-offset: 4px; }
+.cd3-label {
+  margin: 0;
+  font-size: max(11px, calc(11 * var(--u))); line-height: 1.6; letter-spacing: 0.07em; text-transform: uppercase; color: var(--label);
+}
+
+/* The ink words fill in from grey with the scroll: word k of n turns as the block's --p passes k/(n+1),
+   each over 1/(n+1) of it, so they go one after another like a reading line (Linear's, Apple's). Then
+   (.cd3-step) back to grey with --r. */
+.cd3-ink .cd-wi {
+  --t: clamp(0, var(--p) * (var(--n) + 1) - var(--k), 1);
+  color: color-mix(in srgb, var(--ink) calc(var(--t) * 100%), var(--soft));
+}
+.cd3-step .cd3-ink .cd-wi {
+  color: color-mix(in srgb, var(--soft) calc(var(--r) * 100%), color-mix(in srgb, var(--ink) calc(var(--t) * 100%), var(--soft)));
+}
+
+/* 1. the headline at the foot of the first screen; it drifts up and pales as the page leaves it */
+.cd3-hero { height: 100vh; height: 100svh; align-content: end; padding-bottom: calc(56 * var(--u)); }
+.cd3-hero-in {
+  position: relative;
+  translate: 0 calc(var(--r) * -12vh);
+  opacity: calc(1 - var(--r) * 0.85);
+}
+
+/* 2. the clients: the label, the names, and the note at the foot of the screen */
+.cd3-clients {
+  min-height: 100vh; min-height: 100svh;
+  grid-template-rows: auto auto 1fr auto;
+  padding-top: calc(92 * var(--u)); padding-bottom: calc(36 * var(--u));
+  overflow-x: clip; /* a hover logo can run past the edge */
+}
+.cd.cd3 .cd-names.cd3-names {
+  width: auto; margin: calc(14 * var(--u)) 0 0;
+  font-size: var(--d1); line-height: 1.36; letter-spacing: -0.01em;
+}
+.cd3 .cd-name { color: var(--ink); }
+.cd3 .cd-comma { color: #d2d2d2; }
+.cd3-note { grid-column: 1 / 9; grid-row: 4; align-self: end; }
+
+/* 3. the claim, and the gallery (three columns of four) */
+.cd3-work { padding-top: calc(170 * var(--u)); overflow-x: clip; }
+.cd3-gallery { margin-top: calc(64 * var(--u)); }
+.cd.cd3 .cd-gallery { --gap: var(--g); width: 100%; margin: 0; }
+.cd3 .cd-card { border-radius: max(8px, calc(16 * var(--u))); }
+
+/* 4. the process: two statements, the second ink as it arrives and grey again as the film rises; the
+   film opens from an inset, its picture settling from a little larger (the labs' media reveal) */
+.cd3-process { padding-top: calc(200 * var(--u)); padding-bottom: calc(200 * var(--u)); }
+/* The brief scene (Cd3Wrap): the clapperboard (--obj wide) above the statement, centred; with the
+   scene on (wide screens, motion allowed) it pins mid-screen and turns with the scroll (--spin, 0 → 1
+   turn; a tilt of its own, the board's back mirrored half way), the statement scrolls up through it, its
+   words placed one by one round it and gliding to new places as it parts. The scene runs on past the text
+   by the board's height and a quarter screen, so the board holds mid-screen after the text has passed
+   above it, then leaves with the page. */
+.cd3-scene { --obj: calc(190 * var(--u)); }
+.cd3-scene-pin { display: flex; justify-content: center; perspective: 1100px; pointer-events: none; }
+.cd3-brief { margin-top: calc(72 * var(--u)); text-align: center; }
+/* the run-on after the text (a block, not padding: a sticky box is held inside its container's content) */
+.cd3-scene[data-on]::after { content: ''; display: block; height: calc(var(--obj) + 25vh); }
+.cd3-scene[data-on] .cd3-scene-pin {
+  position: sticky; z-index: 2;
+  top: calc(50vh - var(--obj) * 0.42); /* its middle at the screen's (the board is 0.84 as tall as wide) */
+}
+.cd3-scene[data-on] .cd3-brief { position: relative; text-align: left; }
+.cd3-scene[data-on] .cd3-brief .cd-w { position: absolute; left: 0; top: 0; white-space: nowrap; }
+
+/* The clapperboard in 3D (Cd3Clapper): three slabs --t thick — the board, the bar fixed on it, the arm
+   hinged at its left end — in one preserve-3d group, tilted and turned (--spin). The arm lifts with
+   --clap. The faces brighten as they turn to the light and darken as they turn away (--lit, the turn's
+   cosine), and a sheen slides across the front as it turns. */
+.cb {
+  --w: var(--obj); --t: calc(var(--obj) * 0.035);
+  position: relative; width: var(--w); height: calc(var(--w) * 0.84);
+  transform-style: preserve-3d;
+  transform: rotateZ(-12deg) rotateY(calc(var(--spin, 0) * 1turn));
+}
+.cb-slab { position: absolute; left: 0; width: var(--w); height: var(--h); transform-style: preserve-3d; }
+.cb-board { --h: calc(var(--w) * 0.625); bottom: 0; }
+.cb-bar { --h: calc(var(--w) * 0.108); bottom: calc(var(--w) * 0.625); }
+.cb-arm {
+  --h: calc(var(--w) * 0.108); bottom: calc(var(--w) * 0.733);
+  transform-origin: 1.5% 100%; transform: rotateZ(calc(var(--clap, 0) * -24deg));
+}
+.cb-face { position: absolute; inset: 0; backface-visibility: hidden; overflow: hidden; }
+.cb-board .cb-face { border-radius: calc(var(--w) * 0.03); }
+.cb-bar .cb-face, .cb-arm .cb-face { border-radius: calc(var(--w) * 0.012); }
+.cb-face svg { display: block; width: 100%; height: 100%; }
+.cb-front { transform: translateZ(calc(var(--t) / 2)); filter: brightness(calc(0.84 + 0.2 * var(--lit, 1))); }
+.cb-back { transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); filter: brightness(calc(0.84 - 0.2 * var(--lit, 1))); }
+.cb-sheen {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgb(255 255 255 / 0.14) 50%, transparent 62%) no-repeat;
+  background-size: 260% 100%; background-position: calc(110% - var(--spin, 0) * 240%) 0;
+}
+.cb-edge { position: absolute; background: #222; }
+.cb-l, .cb-r { width: var(--t); height: 100%; top: 0; left: calc(50% - var(--t) / 2); }
+.cb-l { transform: rotateY(-90deg) translateZ(calc(var(--w) / 2)); }
+.cb-r { transform: rotateY(90deg) translateZ(calc(var(--w) / 2)); }
+.cb-t, .cb-b { width: 100%; height: var(--t); left: 0; top: calc(50% - var(--t) / 2); }
+.cb-t { transform: rotateX(90deg) translateZ(calc(var(--h) / 2)); background: #2a2a2a; }
+.cb-b { transform: rotateX(-90deg) translateZ(calc(var(--h) / 2)); background: #111; }
+.cd3-step { margin-top: calc(120 * var(--u)); }
+.cd3-film { margin: calc(72 * var(--u)) 0 0; aspect-ratio: 16 / 9; }
+.cd3-film-in {
+  width: 100%; height: 100%; overflow: hidden; background: var(--cd-fill);
+  clip-path: inset(calc((1 - var(--p)) * 9%) calc((1 - var(--p)) * 6%));
+}
+.cd3-film .cd-video { scale: calc(1 + (1 - var(--p)) * 0.14); }
+
+/* phones: 20px margins, the type by the screen's width */
+@media (max-width: 760px) {
+  .cd.cd3 { --m: 20px; --g: 10px; --d1: 10vw; --d2: 8.2vw; }
+  .cd3-hero { padding-bottom: 32px; }
+  .cd3-clients { padding-top: 96px; padding-bottom: 40px; }
+  .cd.cd3 .cd-names.cd3-names { margin-top: 12px; font-size: 9.2vw; line-height: 1.3; }
+  .cd3-note { grid-column: 1 / -1; padding-top: 32px; }
+  .cd3-work { padding-top: 120px; }
+  .cd3-gallery { margin-top: 40px; }
+  .cd3-process { padding-top: 140px; padding-bottom: 120px; }
+  .cd3-film { margin-top: 40px; }
+}
+
+/* The highlighted (ink) text boils all the time, as "10M views…" does on /exp/cd only under the pointer:
+   its edges wobble, the four displacement filters (CdClients' svg) swapped every 120ms (cd.css cd-boil).
+   Not for reduced motion. */
+.cd-js .cd3 .cd3-hl, .cd-js .cd3 .cd3-ink { animation: cd-boil 480ms steps(1, end) infinite; }
+
+/* the falling things (Cd3Props): over the headline, placed by their bodies; hidden until dropped */
+.cd3-props { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.cd3-props img {
+  position: absolute; left: 0; top: 0; display: block; max-width: none;
+  opacity: 0; user-select: none; -webkit-user-drag: none; will-change: transform;
+}
+.cd3-props img[data-on] { opacity: 1; }
+/* with a mouse: pick one up */
+@media (hover: hover) and (pointer: fine) {
+  .cd3-props img[data-on] { pointer-events: auto; cursor: grab; }
+  .cd3-props[data-grabbing] img { cursor: grabbing; }
+}

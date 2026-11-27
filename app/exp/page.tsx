@@ -24,6 +24,7 @@ const GROUPS: { title: string; pages: [href: string, name: string, kind: string]
       ['/exp/hero', 'Hero', 'Section'],
       ['/exp/cd', 'Creative Director', 'Option tabs'],
       ['/exp/cd-2', 'Creative Director', 'Told by the scroll'],
+      ['/exp/cd-3', 'Creative Director', 'Editorial'],
       ['/exp/launches-2', 'Launches 2', 'Page'],
       ['/exp/footer', 'Footer', 'Variants'],
       ['/exp/temp', 'Section 2', 'Snapshot, v1'],
