@@ -3,6 +3,7 @@ import SiteFooter from '../flow/SiteFooter';
 import SiteChrome from '../SiteChrome';
 import HtmlMark from '../HtmlMark';
 import DitherClip from './DitherClip';
+import EdLightbox from './EdLightbox';
 import { CAREERS_EMAIL, ROLES } from './content';
 import '../sections.css';
 import '../flow/flow.css';
@@ -56,6 +57,19 @@ export const Ref = ({ href, children }: { href: string; children: ReactNode }) =
   <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
 );
 
+// an image from the posting, where the posting places it: the column's width, a hairline round it;
+// a click opens it large in a dialog (EdLightbox; the storyboards are dense), at `full` when the posting's
+// original is larger than the page's copy
+export function EdFig({ src, full, w, h, alt, small }: { src: string; full?: string; w: number; h: number; alt: string; small?: boolean }) {
+  return (
+    <figure className={`ed-fig${small ? ' ed-fig-sm' : ''}`}>
+      <a href={full ?? src} target="_blank" rel="noopener noreferrer" aria-label={`${alt} (view large)`}>
+        <img src={src} width={w} height={h} alt={alt} loading="lazy" decoding="async" />
+      </a>
+    </figure>
+  );
+}
+
 // "the type of person" list, as a checklist the reader ticks
 export function EdChecklist({ note, items }: { note: ReactNode; items: ReactNode[] }) {
   return (
@@ -107,6 +121,7 @@ export default function EdRole({ title, cover, children }: { title: string; cove
         <p className="ed-end-title">{title}<span className="ed-pale">at Identity Labs</span></p>
         <Ctas title={title} solid />
       </section>
+      <EdLightbox />
       <SiteFooter layout="fib" />
       <SiteChrome />
     </div>

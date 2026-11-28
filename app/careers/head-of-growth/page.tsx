@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import EdRole, { EdChecklist, EdPart, EdStep, Ref } from '../../../components/careers/EdRole';
+import EdRole, { EdChecklist, EdFig, EdPart, EdStep, Ref } from '../../../components/careers/EdRole';
 import { SITE_URL } from '../../../components/seo';
 
 /* /careers/head-of-growth (2026-11-27; the long read moved here from /exp): the Head of Growth role as a long read (EdRole), as /careers/creative-director.
    The text word for word from the Notion posting, from "The Role" on: a few of its own lines set apart
    (beats, the September band, the lede), its lists as lists, its bold lead-ins darker. The posting's
-   images (a typical launch, a typical day, the 220K outreach, the banner) left out, as on the CD page;
+   images (a typical launch, a typical day, the 220K outreach) where it places them (EdFig), the banner left out;
    "Here's what a typical day looks like:" (beside the third step's list in Notion) after that list.
    The cover: white hydrangeas (Pexels 38695092, baked by scripts/bake-careers-wide.py). */
 
@@ -42,19 +42,20 @@ export default function HeadOfGrowthPage() {
       </EdPart>
 
       <EdPart n={2} id="what-this-looks-like" title="What this looks like">
-        <p className="ed-beat ed-beat-sm">Founder level ownership to run launches end-to-end</p>
+        <p className="ed-beat ed-beat-sm">Founder-level ownership to run launches end-to-end</p>
 
         <EdStep n={1} id="align" title="Align with the founder on the launch outcome and set the strategy and plan to achieve it">
           <p>Say you’re launching a new version of Lovable. You get on a call with the founder, Anton, and align on 1,000 new paying customers in 30 days being the target. You even fly down to SF if required.</p>
           <p>Then you work backwards. 1,000 paying customers means roughly 5M views from people who want to build software but can’t code, and a reason for them to sign up today rather than next month. To get there, you’d need to:</p>
           <ul className="ed-qs">
-            <li>Align with Anton on a killer launch offer that will drive sales eg: free month of Pro for the first 1,000 sign-ups.</li>
+            <li>Align with Anton on a killer launch offer that will drive sales, e.g. a free month of Pro for the first 1,000 sign-ups.</li>
             <li>Lock the storyboard for the main launch video 3 weeks out, so production has time to get every frame right.</li>
             <li>Source and brief 150 creators 2 weeks before launch: no-code builders and solo founders.</li>
-            <li>Plan for 200 assets made by Lovable’s own employees, each one building onto the key features showcased in the main launch video</li>
+            <li>Plan for 200 assets made by Lovable’s own employees, each one building onto the key features showcased in the main launch video.</li>
           </ul>
           <p>You’ll sit across from the founders of some of the fastest-growing companies in Silicon Valley, set their product marketing goals with them, and get them aligned on the strategy to hit them.</p>
           <p>This is what a typical launch looks like:</p>
+          <EdFig src="/assets/careers/hog/typical-launch.webp" w={1838} h={1318} alt="A typical launch" />
         </EdStep>
 
         <EdStep n={2} id="founder-variables" title="Determine variables only controlled by the founder for every launch and make trajectory changing decisions for the whole company">
@@ -73,10 +74,11 @@ export default function HeadOfGrowthPage() {
             <li><B>Work with the ads team to set the strategy</B>, and change demographics, creatives or use cases mid-launch if something isn’t working.</li>
           </ul>
           <p>Here’s what a typical day looks like:</p>
+          <EdFig src="/assets/careers/hog/typical-day.webp" full="/assets/careers/hog/typical-day-full.webp" w={1400} h={1723} alt="A typical day" />
           <p className="ed-beat ed-beat-sm">You design and run the machine that delivers the outcome.</p>
         </EdStep>
 
-        <EdStep n={4} id="rethink" title="Keep rethinking/re-assesing the plan, and make the changes necessary to achieve the goal within the timelines and budget">
+        <EdStep n={4} id="rethink" title="Keep rethinking and reassessing the plan, and make the changes necessary to achieve the goal within the timelines and budget">
           <ol className="ed-shots">
             <li>You’re in the dashboard figuring out why “we almost shut down” outperformed the funding announcement 4:1, and rebuilding the rest of the campaign around it.</li>
             <li>You’re arguing the demo link needs to be in the first tweet, not the second. The second performs 400% worse.</li>
@@ -91,15 +93,15 @@ export default function HeadOfGrowthPage() {
         <EdChecklist
           note="(You don’t have to check all, these are instructional. Usually representative of a certain type of person we are looking for)"
           items={[
-            <><Ref href="https://www.youtube.com/watch?v=hT_MAAwFLIc&t=1799s">Self-guided missile</Ref> - can set the goal and set up the system required to achieve it</>,
-            'You have scaled a product/service/program from 0 to 1000 users and know exactly what got it there',
-            'You’re high agency. Like take this for eg: you think reaching out to 220K influencers is normal',
-            'You’re a ‘jack of all’ generalist',
-            'You have written 5+ posts with 1M views on Twitter and LI and understand the art and science behind it (Instant hire if you do, but we’ll help train you even if you don’t know how this works)',
-            'You think from first principles',
+            <><Ref href="https://www.youtube.com/watch?v=hT_MAAwFLIc&t=1799s">Self-guided missile</Ref>: can set the goal and set up the system required to achieve it.</>,
+            'You have scaled a product/service/program from 0 to 1,000 users and know exactly what got it there.',
+            <>You’re high agency. For example, you think reaching out to 220K influencers is normal.<EdFig src="/assets/careers/hog/outreach-220k.webp" w={1520} h={332} alt="Outreach to 220K influencers" /></>,
+            'You’re a jack-of-all-trades generalist.',
+            'You have written 5+ posts with 1M views on Twitter and LinkedIn and understand the art and science behind it (Instant hire if you do, but we’ll help train you even if you don’t know how this works)',
+            'You think from first principles.',
             'You’re a Twitter nerd and you spend >2 hours/day on Twitter.',
-            'You follow AI, Tech, Venture Capital, Startups and understand our corner of Twitter',
-            'High IQ, High EQ',
+            'You follow AI, Tech, Venture Capital, Startups and understand our corner of Twitter.',
+            'High IQ, high EQ.',
           ]}
         />
       </EdPart>
